@@ -27,7 +27,7 @@ CREATE TABLE entries (
   content TEXT COMMENT 'flags "COLUMN_SCALAR|COMPRESS_ZLIB"'
 ) DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO entries (id, content) VALUES (1, "I found Mroonga that is a MySQL storage engine to use Groonga!");
+INSERT INTO entries (id, content) VALUES (1, "(256 bytes or more required for compression.) Mroonga is a storage engine for MySQL. It provides fast fulltext search feature for all languages including Chinese, Japanese and Korean to all MySQL users. Mroonga was called Groonga storage engine. Mroonga is Tritonn successor.");
 
 SELECT * FROM entries;
 
