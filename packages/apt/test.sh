@@ -15,11 +15,23 @@ wget \
 sudo apt install -V -y ./groonga-apt-source-latest-${code_name}.deb
 sudo apt update
 
-sudo apt install -V -y ${package}
+upstream_mroonga_version=$(dpkg -s mariadb-server-10.3-mroonga | grep Version | awk -F: '{ print $2 }')
+local_mroonga_version=\
+                     $(dpkg -I ${repositories_dir}/debian/pool/${code_name}/main/*/*/*_{${architecture},all}.deb | \
+                         grep Version | \
+                         awk -F: '{ print $2 }')
 
-repositories_dir=/vagrant/packages/${package}/apt/repositories
-sudo apt install -V -y \
-  ${repositories_dir}/debian/pool/${code_name}/main/*/*/*_{${architecture},all}.deb
+if [ ${upstream_mroonga_version} = ${local_mroonga_version} ]; then
+  repositories_dir=/vagrant/packages/${package}/apt/repositories
+  sudo apt install -V -y \
+       ${repositories_dir}/debian/pool/${code_name}/main/*/*/*_{${architecture},all}.deb
+else
+  sudo apt install -V -y ${package}
+
+  repositories_dir=/vagrant/packages/${package}/apt/repositories
+  sudo apt install -V -y \
+    ${repositories_dir}/debian/pool/${code_name}/main/*/*/*_{${architecture},all}.deb
+fi
 
 sudo apt install -V -y \
   gdb \
