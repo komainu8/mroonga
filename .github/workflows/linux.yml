@@ -21,45 +21,45 @@ jobs:
           - os: debian-buster
             package-type: apt
             package: mariadb-server-10.3
-          - os: centos-7
-            package-type: yum
-            package: mariadb-server-10.2
-          - os: centos-7
-            package-type: yum
-            package: mariadb-server-10.3
-          - os: centos-8
-            package-type: yum
-            package: mariadb-server-10.3
-          - os: centos-7
-            package-type: yum
-            package: mariadb-server-10.4
-          - os: centos-8
-            package-type: yum
-            package: mariadb-server-10.4
-          - os: centos-7
-            package-type: yum
-            package: mariadb-server-10.5
-          - os: centos-8
-            package-type: yum
-            package: mariadb-server-10.5
-          - os: centos-7
-            package-type: yum
-            package: mysql-server-5.7
-          - os: centos-7
-            package-type: yum
-            package: mysql-server-8.0
-          - os: centos-8
-            package-type: yum
-            package: mysql-server-8.0
-          - os: centos-7
-            package-type: yum
-            package: percona-server-5.7
-          - os: centos-7
-            package-type: yum
-            package: percona-server-8.0
-          - os: centos-8
-            package-type: yum
-            package: percona-server-8.0
+#          - os: centos-7
+#            package-type: yum
+#            package: mariadb-server-10.2
+#          - os: centos-7
+#            package-type: yum
+#            package: mariadb-server-10.3
+#          - os: centos-8
+#            package-type: yum
+#            package: mariadb-server-10.3
+#          - os: centos-7
+#            package-type: yum
+#            package: mariadb-server-10.4
+#          - os: centos-8
+#            package-type: yum
+#            package: mariadb-server-10.4
+#          - os: centos-7
+#            package-type: yum
+#            package: mariadb-server-10.5
+#          - os: centos-8
+#            package-type: yum
+#            package: mariadb-server-10.5
+#          - os: centos-7
+#            package-type: yum
+#            package: mysql-server-5.7
+#          - os: centos-7
+#            package-type: yum
+#            package: mysql-server-8.0
+#          - os: centos-8
+#            package-type: yum
+#            package: mysql-server-8.0
+#          - os: centos-7
+#            package-type: yum
+#            package: percona-server-5.7
+#          - os: centos-7
+#            package-type: yum
+#            package: percona-server-8.0
+#          - os: centos-8
+#            package-type: yum
+#            package: percona-server-8.0
     runs-on: ubuntu-latest
     steps:
       - name: Remove needless data
@@ -193,45 +193,45 @@ jobs:
           - os: debian-buster
             package-type: apt
             package: mariadb-server-10.3
-          - os: centos-7
-            package-type: yum
-            package: mariadb-server-10.2
-          - os: centos-7
-            package-type: yum
-            package: mariadb-server-10.3
-          - os: centos-8
-            package-type: yum
-            package: mariadb-server-10.3
-          - os: centos-7
-            package-type: yum
-            package: mariadb-server-10.4
-          - os: centos-8
-            package-type: yum
-            package: mariadb-server-10.4
-          - os: centos-7
-            package-type: yum
-            package: mariadb-server-10.5
-          - os: centos-8
-            package-type: yum
-            package: mariadb-server-10.5
-          - os: centos-7
-            package-type: yum
-            package: mysql-server-5.7
-          - os: centos-7
-            package-type: yum
-            package: mysql-server-8.0
-          - os: centos-8
-            package-type: yum
-            package: mysql-server-8.0
-          - os: centos-7
-            package-type: yum
-            package: percona-server-5.7
-          - os: centos-7
-            package-type: yum
-            package: percona-server-8.0
-          - os: centos-8
-            package-type: yum
-            package: percona-server-8.0
+ #         - os: centos-7
+ #           package-type: yum
+ #           package: mariadb-server-10.2
+ #         - os: centos-7
+ #           package-type: yum
+ #           package: mariadb-server-10.3
+ #         - os: centos-8
+ #           package-type: yum
+ #           package: mariadb-server-10.3
+ #         - os: centos-7
+ #           package-type: yum
+ #           package: mariadb-server-10.4
+ #         - os: centos-8
+ #           package-type: yum
+ #           package: mariadb-server-10.4
+ #         - os: centos-7
+ #           package-type: yum
+ #           package: mariadb-server-10.5
+ #         - os: centos-8
+ #           package-type: yum
+ #           package: mariadb-server-10.5
+ #         - os: centos-7
+ #           package-type: yum
+ #           package: mysql-server-5.7
+ #         - os: centos-7
+ #           package-type: yum
+ #           package: mysql-server-8.0
+ #         - os: centos-8
+ #           package-type: yum
+ #           package: mysql-server-8.0
+ #         - os: centos-7
+ #           package-type: yum
+ #           package: percona-server-5.7
+ #         - os: centos-7
+ #           package-type: yum
+ #           package: percona-server-8.0
+ #         - os: centos-8
+ #           package-type: yum
+ #           package: percona-server-8.0
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
