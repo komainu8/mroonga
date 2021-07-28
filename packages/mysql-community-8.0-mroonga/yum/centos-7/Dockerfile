@@ -18,6 +18,7 @@ RUN \
   yumdownloader -y ${quiet} --source mysql-community && \
   yum install -y ${quiet} \
     ccache \
+    ${SCL} \
     groonga-devel \
     groonga-normalizer-mysql-devel \
     intltool \
