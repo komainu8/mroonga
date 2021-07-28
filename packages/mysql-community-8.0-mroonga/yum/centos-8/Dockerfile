@@ -31,4 +31,7 @@ RUN \
   dnf install --disablerepo=appstream -y ${quiet} \
     mysql-community-devel && \
   dnf clean ${quiet} all && \
-  scl enable ${SCL} bash
+  { \
+    echo '#!/bin/bash'; \
+    echo 'source scl_source enable ${SCL}'; \
+  } > /etc/profile.d/enable-${SCL}.sh
