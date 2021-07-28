@@ -29,4 +29,5 @@ RUN \
     rpm-build \
     wget \
     which && \
-  yum clean ${quiet} all
+  yum clean ${quiet} all && \
+  scl enable ${SCL} bash
