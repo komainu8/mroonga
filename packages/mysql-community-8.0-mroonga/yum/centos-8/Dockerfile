@@ -19,7 +19,6 @@ RUN \
   dnf install --enablerepo=powertools -y ${quiet} \
     ccache \
     ${SCL}-annobin \
-    ${SCL}-gcc-c++ \
     groonga-devel \
     groonga-normalizer-mysql-devel \
     intltool \
@@ -31,4 +30,5 @@ RUN \
     which && \
   dnf install --disablerepo=appstream -y ${quiet} \
     mysql-community-devel && \
-  dnf clean ${quiet} all
+  dnf clean ${quiet} all && \
+  scl enable ${SCL} bash
