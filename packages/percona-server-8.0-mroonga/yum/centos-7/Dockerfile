@@ -28,6 +28,7 @@ RUN \
     percona-server-devel \
     ccache \
     ${SCL} \
+    ${SCL}-libstdc++-devel \    
     groonga-devel \
     groonga-normalizer-mysql-devel \
     intltool \

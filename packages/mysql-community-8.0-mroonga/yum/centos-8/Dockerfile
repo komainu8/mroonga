@@ -19,7 +19,7 @@ RUN \
   dnf install --enablerepo=powertools -y ${quiet} \
     ccache \
     ${SCL}-annobin \
-    ${SCL}-gcc-c++ \    
+    ${SCL}-gcc-c++ \
     groonga-devel \
     groonga-normalizer-mysql-devel \
     intltool \
