@@ -7,6 +7,10 @@ package=$1
 mysql_version=$(echo "${package}" | grep -o '[0-9]*\.[0-9]*')
 
 os=$(cut -d: -f4 /etc/system-release-cpe)
+if [ ${os} == "linux" ]; then
+   os=almalinux
+fi
+
 case ${os} in
   amazon)
     os=amazon-linux
