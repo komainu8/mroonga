@@ -246,6 +246,7 @@ set -x
 sudo \
   ./mtr \
   --force \
+  --debug \
   --mysqld=--loose-plugin-load-add=${ha_mroonga_so} \
   --mysqld=--loose-plugin-mroonga=ON \
   --no-check-testcases \
@@ -259,6 +260,7 @@ case ${package} in
     sudo \
       ./mtr \
       --force \
+      --debug \
       --mysqld=--loose-plugin-load-add=${ha_mroonga_so} \
       --mysqld=--loose-plugin-mroonga=ON \
       --parallel=${parallel} \
