@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - "maintenance/**"
+      - ci-test-debug
     tags:
       - "*"
   pull_request:
