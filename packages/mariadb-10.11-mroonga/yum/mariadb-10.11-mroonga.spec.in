@@ -83,6 +83,7 @@ mariadb_build=$HOME/rpmbuild/BUILD/MariaDB-%{_mariadb_version}/cpack_rpm_build_d
     --with-mysql-source=${mariadb_source} \
     --with-mysql-build=${mariadb_build} \
     --with-mysql-config=${mariadb_build}/scripts/mysql_config \
+    --enable-debug \
     %{?mroonga_configure_options}
 make %{?_smp_mflags}
 
