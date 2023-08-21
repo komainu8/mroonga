@@ -74,6 +74,7 @@ if ! cp /MariaDB-*.src.rpm ./; then
 fi
 rpm -Uvh MariaDB-*.src.rpm
 sed -i'' -e 's/^make /# make /' ~/rpmbuild/SPECS/MariaDB.spec
+sed -i'' -e 's/-DCMAKE_BUILD_TYPE=RelWithDebInfo/-DCMAKE_BUILD_TYPE=Debug/' ~/rpmbuild/SPECS/MariaDB.spec
 
 %build
 rpmbuild -bc ~/rpmbuild/SPECS/MariaDB.spec

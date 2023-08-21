@@ -97,6 +97,7 @@ sed \
   -i'' \
   -e "s/^make /make ${required_components} /" \
   ~/rpmbuild/SPECS/%{mariadb_package}.spec
+sed -i'' -e 's/-DCMAKE_BUILD_TYPE=RelWithDebInfo/-DCMAKE_BUILD_TYPE=Debug/' ~/rpmbuild/SPECS/MariaDB.spec
 
 %build
 rpmbuild \
