@@ -76,7 +76,8 @@ jobs:
             --enable-document \
             --with-cutter-source-path=cutter \
             --with-mroonga-github-com-path=mroonga.github.com \
-            --with-mysql-source=../mysql/mysql
+            --with-mysql-source=../mysql/mysql \
+            --with-debug
       - name: Build archive
         run: |
           make dist
@@ -106,17 +107,17 @@ jobs:
       matrix:
         include:
 #          # MariaDB 10.4
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.4
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.4
 #          - os: centos-7
 #            package-type: yum
 #            package: mariadb-10.4
 #
 #          # MariaDB 10.5
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.5
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.5
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.5
@@ -131,9 +132,9 @@ jobs:
 #            package: mariadb-10.5
 #
 #          # MariaDB 10.6
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.6
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.6
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.6
@@ -156,9 +157,9 @@ jobs:
 #            package: mariadb-10.7
 #
 #          # MariaDB 10.8
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.8
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.8
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.8
@@ -167,9 +168,9 @@ jobs:
 #            package: mariadb-10.8
 #
 #          # MariaDB 10.9
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.9
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.9
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.9
@@ -178,9 +179,9 @@ jobs:
 #            package: mariadb-10.9
 #
 #          # MariaDB 10.10
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.10
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.10
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.10
@@ -189,18 +190,18 @@ jobs:
 #            package: mariadb-10.10
 
           # MariaDB 10.11
-          - os: almalinux-8
-            package-type: yum
-            package: mariadb-10.11
-          - os: almalinux-9
-            package-type: yum
-            package: mariadb-10.11
-          - os: centos-7
-            package-type: yum
-            package: mariadb-10.11
-          - os: debian-bookworm
-            package-type: apt
-            package: mariadb-10.11
+#          - os: almalinux-8
+#            package-type: yum
+#            package: mariadb-10.11
+#          - os: almalinux-9
+#            package-type: yum
+#            package: mariadb-10.11
+#          - os: centos-7
+#            package-type: yum
+#            package: mariadb-10.11
+#          - os: debian-bookworm
+#            package-type: apt
+#            package: mariadb-10.11
 
 #          # MySQL 8.0
 #          - os: ubuntu-jammy
@@ -352,17 +353,17 @@ jobs:
       matrix:
         include:
 #          # MariaDB 10.4
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.4
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.4
 #          - os: centos-7
 #            package-type: yum
 #            package: mariadb-10.4
 #
 #          # MariaDB 10.5
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.5
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.5
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.5
@@ -377,9 +378,9 @@ jobs:
 #            package: mariadb-10.5
 #
 #          # MariaDB 10.6
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.6
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.6
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.6
@@ -402,9 +403,9 @@ jobs:
 #            package: mariadb-10.7
 #
 #          # MariaDB 10.8
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.8
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.8
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.8
@@ -413,9 +414,9 @@ jobs:
 #            package: mariadb-10.8
 #
 #          # MariaDB 10.9
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.9
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.9
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.9
@@ -424,9 +425,9 @@ jobs:
 #            package: mariadb-10.9
 #
 #          # MariaDB 10.10
-#          - os: almalinux-8
-#            package-type: yum
-#            package: mariadb-10.10
+          - os: almalinux-8
+            package-type: yum
+            package: mariadb-10.10
 #          - os: almalinux-9
 #            package-type: yum
 #            package: mariadb-10.10
@@ -435,19 +436,19 @@ jobs:
 #            package: mariadb-10.10
 
           # MariaDB 10.11
-          - os: almalinux-8
-            package-type: yum
-            package: mariadb-10.11
-          - os: almalinux-9
-            package-type: yum
-            package: mariadb-10.11
-          - os: centos-7
-            package-type: yum
-            package: mariadb-10.11
-          - os: debian-bookworm
-            package-type: apt
-            package: mariadb-10.11
-
+#          - os: almalinux-8
+#            package-type: yum
+#            package: mariadb-10.11
+#          - os: almalinux-9
+#            package-type: yum
+#            package: mariadb-10.11
+#          - os: centos-7
+#            package-type: yum
+#            package: mariadb-10.11
+#          - os: debian-bookworm
+#            package-type: apt
+#            package: mariadb-10.11
+#
 #          # MySQL 8.0
 #          - os: ubuntu-jammy
 #            package-type: apt
