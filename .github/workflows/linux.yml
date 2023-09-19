@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - "maintenance/**"
+      - "fix-memory-leak"
     tags:
       - "*"
   pull_request:
