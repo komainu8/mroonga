@@ -30,10 +30,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - mariadb-release: "10.4"
-          - mariadb-release: "10.5"
-          - mariadb-release: "10.6"
-          - mariadb-release: "10.11"
+#          - mariadb-release: "10.4"
+#          - mariadb-release: "10.5"
+#          - mariadb-release: "10.6"
+#          - mariadb-release: "10.11"
           - mariadb-release: "10.11"
             use-main: "yes"
           - mariadb-release: "10.11"
@@ -127,9 +127,12 @@ jobs:
         run: |
           cd ..\source
           if ("${{ matrix.use-main }}" -eq "yes") {
-            git clone --quiet --depth 1 --recursive `
+            git clone --quiet --recursive `
               https://github.com/groonga/groonga.git `
               extra\groonga
+            pushd extra\groonga
+            git reset --hard a2da3f20f3d80c58004eed5e39903cb800549209
+            popd
             pushd extra\groonga\vendor
             ruby download_lz4.rb
             ruby download_mecab.rb
