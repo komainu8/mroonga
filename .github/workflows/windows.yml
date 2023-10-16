@@ -131,7 +131,7 @@ jobs:
               https://github.com/groonga/groonga.git `
               extra\groonga
             pushd extra\groonga
-            git reset --hard 0718a6838201773feb328637801fdf3400c7b313
+            git reset --hard a2da3f20f3d80c58004eed5e39903cb800549209
             popd
             pushd extra\groonga\vendor
             ruby download_lz4.rb
