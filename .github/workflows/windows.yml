@@ -30,10 +30,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - mariadb-release: "10.4"
-          - mariadb-release: "10.5"
-          - mariadb-release: "10.6"
-          - mariadb-release: "10.11"
+#          - mariadb-release: "10.4"
+#          - mariadb-release: "10.5"
+#          - mariadb-release: "10.6"
+#          - mariadb-release: "10.11"
           - mariadb-release: "10.11"
             use-main: "yes"
           - mariadb-release: "10.11"
@@ -130,6 +130,9 @@ jobs:
             git clone --quiet --depth 1 --recursive `
               https://github.com/groonga/groonga.git `
               extra\groonga
+            pushd extra\groonga
+            git reset --hard 8774c00e301a244135a56656155ae0d7b842829f
+            popd
             pushd extra\groonga\vendor
             ruby download_lz4.rb
             ruby download_mecab.rb
@@ -179,6 +182,7 @@ jobs:
             -DCONNECT_WITH_LIBXML2=OFF ^
             -DMRN_GROONGA_EMBED=${{ matrix.embed || 'OFF' }} ^
             -DMRN_GROONGA_NORMALIZER_MYSQL_EMBED=${{ matrix.embed || 'OFF' }} ^
+            -DGRN_WITH_MRUBY=ON ^
             -DGRN_WITH_WINDOWS_BACK_TRACE=OFF || exit /B
       - name: Install
         shell: cmd
