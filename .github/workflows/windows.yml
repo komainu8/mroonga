@@ -127,7 +127,7 @@ jobs:
         run: |
           cd ..\source
           if ("${{ matrix.use-main }}" -eq "yes") {
-            git clone --quiet --depth 1 --recursive `
+            git clone --quiet --recursive `
               https://github.com/groonga/groonga.git `
               extra\groonga
             pushd extra\groonga
