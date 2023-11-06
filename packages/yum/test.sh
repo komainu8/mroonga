@@ -212,6 +212,10 @@ for test_suite_name in $(find plugin/mroonga -type d '!' -name '[tr]'); do
 done
 set -x
 
+sudo ${mysql} -e "SET GLOBAL mroonga_log_level = \"debug\""
+sudo ${mysql} -e "SHOW VARIABLES LIKE 'mroonga_log_level'"
+sudo ${mysql} -e "SHOW VARIABLES LIKE 'mroonga_log_file'"
+
 sudo \
   ./mtr \
   --force \
@@ -220,7 +224,8 @@ sudo \
   --no-check-testcases \
   --parallel=${parallel} \
   --retry=3 \
-  --suite="${test_suite_names}"
+  --suite="${test_suite_names}" \
+  --force
 
 case ${package} in
   mariadb-*)
@@ -233,9 +238,14 @@ case ${package} in
       --parallel=${parallel} \
       --ps-protocol \
       --retry=3 \
-      --suite="${test_suite_names}"
+      --suite="${test_suite_names}" \
+      --force
     ;;
 esac
+
+pwd
+ls -al
+cat groonga.log
 
 sudo rm -rf plugin
 if [ -d plugin.backup ]; then
