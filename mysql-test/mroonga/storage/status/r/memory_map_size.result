@@ -1,3 +1,0 @@
-SHOW STATUS LIKE 'mroonga_memory_map_size';
-Variable_name	Value
-Mroonga_memory_map_size	0
