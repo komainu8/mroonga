@@ -27,6 +27,7 @@ case ${major_version} in
     else
       DNF="dnf --enablerepo=powertools"
     fi
+    sudo ${DNF} update -y
     sudo dnf module -y disable mariadb
     sudo dnf module -y disable mysql
     ;;
@@ -143,7 +144,7 @@ function mroonga_can_be_registered_for_mysql_community_minimal() {
   mysqladmin -u root -p${auto_generated_password} shutdown
 }
 
-repositories_dir=/vagrant/packages/${package}/yum/repositories
+repositories_dir=/host/packages/${package}/yum/repositories
 sudo ${DNF} install -y \
   ${repositories_dir}/${os}/${major_version}/*/Packages/*.rpm
 
@@ -181,7 +182,7 @@ else
   sudo rm -rf plugin
 fi
 sudo mkdir -p plugin
-sudo cp -a /vagrant/mysql-test/mroonga/ plugin/
+sudo cp -a /host/mysql-test/mroonga/ plugin/
 sed -i'' -e "s/ha_mroonga\\.so/${ha_mroonga_so}/g" \
   plugin/mroonga/include/mroonga/check_ha_mroonga_so.inc
 sed -i'' -e "s/\$HA_MROONGA_SO/${ha_mroonga_so}/g" \
@@ -211,6 +212,10 @@ for test_suite_name in $(find plugin/mroonga -type d '!' -name '[tr]'); do
 done
 set -x
 
+sudo ${mysql} -e "SET GLOBAL mroonga_log_level = \"debug\""
+sudo ${mysql} -e "SHOW VARIABLES LIKE 'mroonga_log_level'"
+sudo ${mysql} -e "SHOW VARIABLES LIKE 'mroonga_log_file'"
+
 sudo \
   ./mtr \
   --force \
@@ -219,7 +224,8 @@ sudo \
   --no-check-testcases \
   --parallel=${parallel} \
   --retry=3 \
-  --suite="${test_suite_names}"
+  --suite="${test_suite_names}" \
+  --force
 
 case ${package} in
   mariadb-*)
@@ -232,9 +238,14 @@ case ${package} in
       --parallel=${parallel} \
       --ps-protocol \
       --retry=3 \
-      --suite="${test_suite_names}"
+      --suite="${test_suite_names}" \
+      --force
     ;;
 esac
+
+pwd
+ls -al
+cat groonga.log
 
 sudo rm -rf plugin
 if [ -d plugin.backup ]; then
