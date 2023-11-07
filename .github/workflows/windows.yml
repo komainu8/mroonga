@@ -252,7 +252,7 @@ jobs:
       - name: Test
         run: |
           pushd install\mysql-test\plugin\mroonga
-          pushd storage
+          Get-Item *
           Remove-Item alter_table -Recurse -Force
           Remove-Item auto_increment -Recurse -Force
           Remove-Item binlog -Recurse -Force
