@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -exu
+set -x
 
 package=$1
 
