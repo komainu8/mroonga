@@ -314,6 +314,13 @@ jobs:
             --parallel=${Env:NUMBER_OF_PROCESSORS} `
             --retry=3 `
             --suite=$($suites -join ",")
+          Get-Item *
+          Get-Content .\mroonga.log
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: mroonga.log
+          path: mroonga.log
 
 #      - name: "Test: reference count"
 #        run: |
