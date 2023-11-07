@@ -283,6 +283,10 @@ case ${package} in
     ;;
 esac
 
+pwd
+ls -al
+cat mroonga.log
+
 sudo rm -rf plugin
 if [ -d plugin.backup ]; then
   sudo mv plugin.backup plugin
