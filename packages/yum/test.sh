@@ -200,6 +200,60 @@ case ${package} in
     rm -rf optimization/count_skip
     popd
     ;;
+  *)
+    pushd plugin/mroonga
+    rm -rf wrapper
+    popd
+    pushd plugin/mroonga/storage
+    rm -rf alter_table/
+    rm -rf auto_increment/
+    rm -rf binlog/
+    rm -rf check_table/
+    rm -rf collation/
+    rm -rf column/
+    rm -rf create/
+    rm -rf delete/
+    rm -rf drop/
+    rm -rf foreign_key/
+    rm -rf function/
+    rm -rf geometry/
+    rm -rf index/
+    rm -rf information_schema/
+    rm -rf insert/
+    rm -rf like/
+    rm -rf lock_tables/
+    rm -rf optimization/
+    rm -rf r/
+    rm -rf repair_table/
+    rm -rf replace/
+    rm -rf select/
+    rm -rf status/
+    rm -rf sub_query/
+    rm -rf t/
+    rm -rf update/
+    rm -rf variable/
+    rm -rf fulltext/boolean_mode/
+    rm -rf fulltext/charset/
+    rm -rf fulltext/groonga/
+    rm -rf fulltext/insert/
+    rm -rf fulltext/multiple_column_index/
+    rm -rf fulltext/order/
+    rm -rf fulltext/t/empty_query.test
+    rm -rf fulltext/t/found_rows.test
+    rm -rf fulltext/t/index_recreate.test
+    rm -rf fulltext/t/multiple_index.test
+    rm -rf fulltext/t/no_primary_key.test
+    rm -rf fulltext/t/not_match_against.test
+    rm -rf fulltext/t/or.test
+    rm -rf fulltext/r/empty_query.result
+    rm -rf fulltext/r/found_rows.result
+    rm -rf fulltext/r/index_recreate.result
+    rm -rf fulltext/r/multiple_index.result
+    rm -rf fulltext/r/no_primary_key.result
+    rm -rf fulltext/r/not_match_against.result
+    rm -rf fulltext/r/or.result
+    popd
+    ;;
 esac
 
 test_suite_names=""
