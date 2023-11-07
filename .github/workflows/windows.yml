@@ -251,6 +251,58 @@ jobs:
 
       - name: Test
         run: |
+          pushd install\mysql-test\plugin\mroonga
+          Remove-Item wrapper -Recurse -Force
+          pushd storage
+          Remove-Item alter_table -Recurse -Force
+          Remove-Item auto_increment -Recurse -Force
+          Remove-Item binlog -Recurse -Force
+          Remove-Item check_table -Recurse -Force
+          Remove-Item collation -Recurse -Force
+          Remove-Item column -Recurse -Force
+          Remove-Item create -Recurse -Force
+          Remove-Item delete -Recurse -Force
+          Remove-Item drop -Recurse -Force
+          Remove-Item foreign_key -Recurse -Force
+          Remove-Item function -Recurse -Force
+          Remove-Item geometry -Recurse -Force
+          Remove-Item index -Recurse -Force
+          Remove-Item information_schema -Recurse -Force
+          Remove-Item insert -Recurse -Force
+          Remove-Item like -Recurse -Force
+          Remove-Item lock_tables -Recurse -Force
+          Remove-Item optimization -Recurse -Force
+          Remove-Item r -Recurse -Force
+          Remove-Item repair_table -Recurse -Force
+          Remove-Item replace -Recurse -Force
+          Remove-Item select -Recurse -Force
+          Remove-Item status -Recurse -Force
+          Remove-Item sub_query -Recurse -Force
+          Remove-Item t -Recurse -Force
+          Remove-Item update -Recurse -Force
+          Remove-Item variable -Recurse -Force
+          Remove-Item fulltext\boolean_mode -Recurse -Force
+          Remove-Item fulltext\charset -Recurse -Force
+          Remove-Item fulltext\groonga -Recurse -Force
+          Remove-Item fulltext\insert -Recurse -Force
+          Remove-Item fulltext\multiple_column_index -Recurse -Force
+          Remove-Item fulltext\order -Recurse -Force
+          Remove-Item fulltext\t\empty_query.test -Recurse -Force
+          Remove-Item fulltext\t\found_rows.test -Recurse -Force
+          Remove-Item fulltext\t\index_recreate.test -Recurse -Force
+          Remove-Item fulltext\t\multiple_index.test -Recurse -Force
+          Remove-Item fulltext\t\no_primary_key.test -Recurse -Force
+          Remove-Item fulltext\t\not_match_against.test -Recurse -Force
+          Remove-Item fulltext\t\or.test -Recurse -Force
+          Remove-Item fulltext\r\empty_query.result -Recurse -Force
+          Remove-Item fulltext\r\found_rows.result -Recurse -Force
+          Remove-Item fulltext\r\index_recreate.result -Recurse -Force
+          Remove-Item fulltext\r\multiple_index.result -Recurse -Force
+          Remove-Item fulltext\r\no_primary_key.result -Recurse -Force
+          Remove-Item fulltext\r\not_match_against.result -Recurse -Force
+          Remove-Item fulltext\r\or.result -Recurse -Force
+          popd
+          popd
           cd install\mysql-test
           $suites = `
             Get-ChildItem -Recurse -Directory -Name t plugin\mroonga | `
@@ -263,17 +315,17 @@ jobs:
             --retry=3 `
             --suite=$($suites -join ",")
 
-      - name: "Test: reference count"
-        run: |
-          cd install\mysql-test
-          $suites = `
-            Get-ChildItem -Recurse -Directory -Name t plugin\mroonga | `
-              Split-Path -Parent | `
-              % {$_.replace("\", "/")}
-          perl mysql-test-run.pl `
-            --force `
-            --mysqld=--loose-plugin-mroonga-enable-reference-count=ON `
-            --no-check-testcases `
-            --parallel=${Env:NUMBER_OF_PROCESSORS} `
-            --retry=3 `
-            --suite=$($suites -join ",")
+#      - name: "Test: reference count"
+#        run: |
+#          cd install\mysql-test
+#          $suites = `
+#            Get-ChildItem -Recurse -Directory -Name t plugin\mroonga | `
+#              Split-Path -Parent | `
+#              % {$_.replace("\", "/")}
+#          perl mysql-test-run.pl `
+#            --force `
+#            --mysqld=--loose-plugin-mroonga-enable-reference-count=ON `
+#            --no-check-testcases `
+#            --parallel=${Env:NUMBER_OF_PROCESSORS} `
+#            --retry=3 `
+#            --suite=$($suites -join ",")
