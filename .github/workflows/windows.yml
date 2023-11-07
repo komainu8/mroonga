@@ -252,7 +252,6 @@ jobs:
       - name: Test
         run: |
           pushd install\mysql-test\plugin\mroonga
-          Remove-Item wrapper -Recurse -Force
           pushd storage
           Remove-Item alter_table -Recurse -Force
           Remove-Item auto_increment -Recurse -Force
