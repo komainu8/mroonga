@@ -222,7 +222,18 @@ case ${package} in
     rm -rf insert/
     rm -rf like/
     rm -rf lock_tables/
-    rm -rf optimization/
+    rm -rf optimization/count_skip/
+    rm -rf optimization/order_limit/
+    rm -rf optimization/condition_push_down/all
+    rm -rf optimization/condition_push_down/one_full_text_search
+    rm -rf optimization/condition_push_down/t/in.test
+    rm -rf optimization/condition_push_down/t/integer_string_cast.test
+    rm -rf optimization/condition_push_down/t/match_or_and.test
+    rm -rf optimization/condition_push_down/t/string_integer_cast.test
+    rm -rf optimization/condition_push_down/r/in.result
+    rm -rf optimization/condition_push_down/r/integer_string_cast.result
+    rm -rf optimization/condition_push_down/r/match_or_and.result
+    rm -rf optimization/condition_push_down/r/string_integer_cast.result
     rm -rf r/
     rm -rf repair_table/
     rm -rf replace/
@@ -232,26 +243,7 @@ case ${package} in
     rm -rf t/
     rm -rf update/
     rm -rf variable/
-    rm -rf fulltext/boolean_mode/
-    rm -rf fulltext/charset/
-    rm -rf fulltext/groonga/
-    rm -rf fulltext/insert/
-    rm -rf fulltext/multiple_column_index/
-    rm -rf fulltext/order/
-    rm -rf fulltext/t/empty_query.test
-    rm -rf fulltext/t/found_rows.test
-    rm -rf fulltext/t/index_recreate.test
-    rm -rf fulltext/t/multiple_index.test
-    rm -rf fulltext/t/no_primary_key.test
-    rm -rf fulltext/t/not_match_against.test
-    rm -rf fulltext/t/or.test
-    rm -rf fulltext/r/empty_query.result
-    rm -rf fulltext/r/found_rows.result
-    rm -rf fulltext/r/index_recreate.result
-    rm -rf fulltext/r/multiple_index.result
-    rm -rf fulltext/r/no_primary_key.result
-    rm -rf fulltext/r/not_match_against.result
-    rm -rf fulltext/r/or.result
+    rm -rf fulltext/
     popd
     ;;
 esac
