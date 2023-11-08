@@ -10195,7 +10195,15 @@ const Item *ha_mroonga::storage_cond_push(const Item *cond
                                         true);
       if (converter.count_match_against(cond) == 1 &&
           converter.is_convertable(cond)) {
+        GRN_LOG(ctx_, GRN_LOG_DEBUG,
+                "[mroonga][condition-push-down][true][ONE_FULL_TEXT_SEARCH] "
+                "Before mrn_condition_push_down value: %d",
+                mrn_condition_push_down);
         ++mrn_condition_push_down;
+        GRN_LOG(ctx_, GRN_LOG_DEBUG,
+                "[mroonga][condition-push-down][true][ONE_FULL_TEXT_SEARCH] "
+                "After mrn_condition_push_down value: %d",
+                mrn_condition_push_down);
         reminder_cond = NULL;
       }
     }
