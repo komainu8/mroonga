@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS users, posts, comments;
 
 SET NAMES utf8mb4;
 SET GLOBAL mroonga_log_level=DEBUG;
-SET GLOBAL mroonga_log_file="mroonga.log"
+SET GLOBAL mroonga_log_file="mroonga.log";
 
 CREATE TABLE users (
   id int NOT NULL,
