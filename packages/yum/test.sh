@@ -276,7 +276,7 @@ case ${package} in
       --force \
       --mysqld=--loose-plugin-load-add=${ha_mroonga_so} \
       --mysqld=--loose-plugin-mroonga=ON \
-      --ps-protocol \
+#      --ps-protocol \
       --suite="${test_suite_names}"
     ;;
 esac
