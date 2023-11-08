@@ -324,6 +324,13 @@ namespace mrn {
     case STRING_TYPE:
       if (func_type == Item_func::EQ_FUNC) {
         grn_encoding encoding = encoding::convert(field_item->field->charset());
+        GRN_LOG(ctx_, GRN_LOG_DEBUG,
+                "[mroonga][condition-push-down][true][string type][eq func][debug] "
+                "string equal operation for "
+                "mixed charset isn't supported: <%.*s>: <%s>",
+                MRN_ITEM_FIELD_GET_NAME_LENGTH(field_item),
+                MRN_ITEM_FIELD_GET_NAME(field_item),
+                MRN_CHARSET_CSNAME(field_item->field->charset()));
         if (!encodings.empty() && encodings[0] != encoding) {
           GRN_LOG(ctx_, GRN_LOG_DEBUG,
                   "[mroonga][condition-push-down][false] "
@@ -346,6 +353,13 @@ namespace mrn {
       }
       break;
     case INT_TYPE:
+      GRN_LOG(ctx_, GRN_LOG_DEBUG,
+              "[mroonga][condition-push-down][int type][debug] "
+              "constant value of enum binary operation "
+              "isn't string nor integer: <%.*s>: <%u>",
+              MRN_ITEM_FIELD_GET_NAME_LENGTH(field_item),
+              MRN_ITEM_FIELD_GET_NAME(field_item),
+              value_item->type());
       if (field_type == MYSQL_TYPE_ENUM) {
         if (!MRN_ITEM_IS_STRING_TYPE(value_item) &&
             !MRN_ITEM_IS_INT_TYPE(value_item)) {
