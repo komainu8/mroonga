@@ -10168,6 +10168,12 @@ const Item *ha_mroonga::storage_cond_push(const Item *cond
   ulong type_raw = THDVAR(ha_thd(), condition_push_down_type);
   mrn::condition_push_down::type type =
     static_cast<mrn::condition_push_down::type>(type_raw);
+
+  GRN_LOG(ctx, GRN_LOG_DEBUG,
+          "[mroonga][condition-push-down][true][-----] "
+          "Before mrn_condition_push_down value: %d",
+          mrn_condition_push_down);
+
   switch (type) {
   case mrn::condition_push_down::NONE:
     break;
@@ -10180,7 +10186,15 @@ const Item *ha_mroonga::storage_cond_push(const Item *cond
                                         table->key_info,
                                         true);
       if (converter.is_convertable(cond)) {
+        GRN_LOG(ctx, GRN_LOG_DEBUG,
+                "[mroonga][condition-push-down][true][ALL] "
+                "Before mrn_condition_push_down value: %d",
+                mrn_condition_push_down);
         ++mrn_condition_push_down;
+        GRN_LOG(ctx, GRN_LOG_DEBUG,
+                "[mroonga][condition-push-down][true][ALL] "
+                "After mrn_condition_push_down value: %d",
+                mrn_condition_push_down);
         reminder_cond = NULL;
       }
     }
@@ -10209,6 +10223,12 @@ const Item *ha_mroonga::storage_cond_push(const Item *cond
     }
     break;
   }
+
+  GRN_LOG(ctx, GRN_LOG_DEBUG,
+          "[mroonga][condition-push-down][true][-----] "
+          "After mrn_condition_push_down value: %d",
+          mrn_condition_push_down);
+
   DBUG_RETURN(reminder_cond);
 }
 
