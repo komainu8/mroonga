@@ -313,10 +313,8 @@ jobs:
             --no-check-testcases `
             --parallel=${Env:NUMBER_OF_PROCESSORS} `
             --suite=$($suites -join ",")
-          Get-Item *
-          Get-Item D:/a/mroonga/mroonga/install/mysql-test/var/log/
+          Get-Item D:/a/mroonga/mroonga/install/mysql-test/var/log/*
           Get-ChildItem -Path D: -Filte mroonga.log -Recurse
-          Get-Content .\mroonga.log
 
       - uses: actions/upload-artifact@v3
         with:
