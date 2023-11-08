@@ -31,14 +31,14 @@ jobs:
       matrix:
         include:
           - mariadb-release: "10.4"
-          - mariadb-release: "10.5"
-          - mariadb-release: "10.6"
-          - mariadb-release: "10.11"
-          - mariadb-release: "10.11"
-            use-main: "yes"
-          - mariadb-release: "10.11"
-            use-main: "yes"
-            embed: "ON"
+#          - mariadb-release: "10.5"
+#          - mariadb-release: "10.6"
+#          - mariadb-release: "10.11"
+#          - mariadb-release: "10.11"
+#            use-main: "yes"
+#          - mariadb-release: "10.11"
+#            use-main: "yes"
+#            embed: "ON"
     env:
       PACKAGE_PLATFORM: "winx64"
       VC_ARCHITECTURE: "x64"
