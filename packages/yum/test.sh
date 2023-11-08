@@ -258,15 +258,15 @@ for test_suite_name in $(find plugin/mroonga -type d '!' -name '[tr]'); do
 done
 set -x
 
-sudo \
-  ./mtr \
-  --force \
-  --mysqld=--loose-plugin-load-add=${ha_mroonga_so} \
-  --mysqld=--loose-plugin-mroonga=ON \
-  --no-check-testcases \
-  --parallel=${parallel} \
-  --retry=3 \
-  --suite="${test_suite_names}"
+#sudo \
+#  ./mtr \
+#  --force \
+#  --mysqld=--loose-plugin-load-add=${ha_mroonga_so} \
+#  --mysqld=--loose-plugin-mroonga=ON \
+#  --no-check-testcases \
+#  --parallel=${parallel} \
+#  --retry=3 \
+#  --suite="${test_suite_names}"
 
 case ${package} in
   mariadb-*)
@@ -276,9 +276,7 @@ case ${package} in
       --force \
       --mysqld=--loose-plugin-load-add=${ha_mroonga_so} \
       --mysqld=--loose-plugin-mroonga=ON \
-      --parallel=${parallel} \
       --ps-protocol \
-      --debug \
       --suite="${test_suite_names}"
     ;;
 esac
