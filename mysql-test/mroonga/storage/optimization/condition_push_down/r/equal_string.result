@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS memos;
 FLUSH STATUS;
 SET NAMES utf8mb4;
 SET GLOBAL mroonga_log_level=DEBUG;
-SET GLOBAL mroonga_log_file="mroonga.log";
+SET GLOBAL mroonga_log_file="/tmp/mroonga.log";
 CREATE TABLE memos (
 id INT PRIMARY KEY,
 title VARCHAR(128),

@@ -284,8 +284,9 @@ case ${package} in
 esac
 
 pwd
-ls -al
-cat mroonga.log
+ls -al /
+ls -al /tmp
+cat /tmp/mroonga.log
 
 sudo rm -rf plugin
 if [ -d plugin.backup ]; then
