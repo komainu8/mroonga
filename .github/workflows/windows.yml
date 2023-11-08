@@ -312,8 +312,7 @@ jobs:
             --force `
             --no-check-testcases `
             --parallel=${Env:NUMBER_OF_PROCESSORS} `
-            --suite=$($suites -join ",") `
-            --debug
+            --suite=$($suites -join ",")
           Get-Item D:/a/mroonga/mroonga/install/mysql-test/var/log/*
           Get-ChildItem -Path D: -Filte mroonga.log -Recurse
 
