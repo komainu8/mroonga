@@ -278,6 +278,7 @@ case ${package} in
       --mysqld=--loose-plugin-mroonga=ON \
       --parallel=${parallel} \
       --ps-protocol \
+      --debug \
       --suite="${test_suite_names}"
     ;;
 esac
