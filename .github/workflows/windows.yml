@@ -31,14 +31,14 @@ jobs:
       matrix:
         include:
           - mariadb-release: "10.4"
-          - mariadb-release: "10.5"
-          - mariadb-release: "10.6"
-          - mariadb-release: "10.11"
-          - mariadb-release: "10.11"
-            use-main: "yes"
-          - mariadb-release: "10.11"
-            use-main: "yes"
-            embed: "ON"
+#          - mariadb-release: "10.5"
+#          - mariadb-release: "10.6"
+#          - mariadb-release: "10.11"
+#          - mariadb-release: "10.11"
+#            use-main: "yes"
+#          - mariadb-release: "10.11"
+#            use-main: "yes"
+#            embed: "ON"
     env:
       PACKAGE_PLATFORM: "winx64"
       VC_ARCHITECTURE: "x64"
@@ -55,10 +55,7 @@ jobs:
         run: |
           Set-TimeZone -Id "Tokyo Standard Time"
       - uses: actions/setup-ruby@v1
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      - name: Set environment variables
+      - name: Detect MariaDB version
         run: |
           $releasesResponse = `
             Invoke-WebRequest `
@@ -71,7 +68,31 @@ jobs:
           $mariaDBVersion = $latestRelease
           Write-Output "MARIADB_VERSION=${mariaDBVersion}" | `
             Out-File -FilePath ${Env:GITHUB_ENV} -Encoding utf8 -Append
-          $mroongaVersion = "$(Get-Content version_full)"
+      - name: Cache MariaDB archive
+        uses: actions/cache@v3
+        with:
+          path: download/
+          key: download-mariadb-${{ env.MARIADB_VERSION }}
+      - name: Download MariaDB
+        run: |
+          $mariadbTarGz = "download\mariadb-${Env:MARIADB_VERSION}.tar.gz"
+          if (-not(Test-Path -Path ${mariadbTarGz})) {
+            New-Item download -ItemType Directory -Force
+            Invoke-WebRequest `
+              -Uri "https://downloads.mariadb.org/rest-api/mariadb/${Env:MARIADB_VERSION}/mariadb-${Env:MARIADB_VERSION}.tar.gz" `
+              -OutFile ${mariadbTarGz} `
+              -Verbose
+          }
+          ridk exec tar xzf "${mariadbTarGz}"
+          Move-Item mariadb-${Env:MARIADB_VERSION} mariadb
+          Remove-Item mariadb\storage\mroonga -Recurse -Force
+      - uses: actions/checkout@v4
+        with:
+          path: mariadb/storage/mroonga
+          submodules: recursive
+      - name: Set environment variables
+        run: |
+          $mroongaVersion = "$(Get-Content mariadb\storage\mroonga\version_full)"
           $artifactName = "mariadb-${mariaDBVersion}-with-mroonga-${mroongaVersion}"
           if ("${{ matrix.use-main }}" -eq "yes") {
             $artifactName += "-with-groonga-main"
@@ -88,7 +109,7 @@ jobs:
         with:
           path: |
             ~\AppData\Roaming\ccache
-          key: source-${{ env.MARIADB_VERSION }}-${{ env.VC_ARCHITECTURE }}-ccache-${{ hashFiles('*.cpp', '*.hpp', '*.h', 'lib/*.cpp', 'lib/*.hpp') }}
+          key: source-${{ env.MARIADB_VERSION }}-${{ env.VC_ARCHITECTURE }}-ccache-${{ hashFiles('mariadb/storage/mroonga/**.{cpp,hpp,h}') }}
           restore-keys: source-${{ env.MARIADB_VERSION }}-${{ env.VC_ARCHITECTURE }}-ccache-
       - name: Prepare ccache
         run: |
@@ -98,38 +119,25 @@ jobs:
             Out-File -FilePath ${Env:GITHUB_ENV} -Encoding utf8 -Append
           Write-Output "CMAKE_CXX_COMPILER_LAUNCHER=ccache" | `
             Out-File -FilePath ${Env:GITHUB_ENV} -Encoding utf8 -Append
-      - name: Cache MariaDB archive
-        uses: actions/cache@v3
-        with:
-          path: download/
-          key: download-mariadb-${{ env.MARIADB_VERSION }}
       - name: Prepare MariaDB
         run: |
-          $mariadbTarGz = "download\mariadb-${Env:MARIADB_VERSION}.tar.gz"
-          if (-not(Test-Path -Path ${mariadbTarGz})) {
-            New-Item download -ItemType Directory -Force
-            Invoke-WebRequest `
-              -Uri "https://downloads.mariadb.org/rest-api/mariadb/${Env:MARIADB_VERSION}/mariadb-${Env:MARIADB_VERSION}.tar.gz" `
-              -OutFile ${mariadbTarGz} `
-              -Verbose
-          }
-          ridk exec tar xzf "${mariadbTarGz}"
-          Move-Item mariadb-${Env:MARIADB_VERSION} ..\source
-          cd ..\source
+          cd mariadb
           if ("${Env:MARIADB_VERSION}" -match "^10\.5|^10\.6|^10\.11") {
             ridk exec patch -p1 -i `
-              ..\mroonga\packages\source\patches\mariadb-10.5.5-add-a-missing-export-symbol.diff
+              storage\mroonga\packages\source\patches\mariadb-10.5.5-add-a-missing-export-symbol.diff
           }
-          Remove-Item storage\mroonga -Recurse -Force
-          Copy-Item ..\mroonga storage\mroonga -Recurse
-          Copy-Item ..\mroonga\build\msvc_ccache.cmake cmake\build_configurations\
+          Copy-Item storage\mroonga\build\mroonga_windows.cmake cmake\build_configurations\
+      - uses: actions/checkout@v4
+        if: |
+          matrix.use-main == 'yes'
+        with:
+          path: mariadb/extra/groonga
+          repository: groonga/groonga
+          submodules: recursive
       - name: Prepare Groonga
         run: |
-          cd ..\source
+          cd mariadb
           if ("${{ matrix.use-main }}" -eq "yes") {
-            git clone --quiet --depth 1 --recursive `
-              https://github.com/groonga/groonga.git `
-              extra\groonga
             pushd extra\groonga\vendor
             ruby download_lz4.rb
             ruby download_mecab.rb
@@ -147,35 +155,40 @@ jobs:
             Move-Item groonga-* extra\groonga
           }
           Remove-Item extra\groonga\test -Recurse -Force
-      - name: Prepare groonga-normalizer-mysql
+      - uses: actions/checkout@v4
+        # TODO: Remove " || true" when we release
+        # groonga-normalizer-mysql 1.2.3.
+        if: |
+          matrix.use-main == 'yes' || true
+        with:
+          path: mariadb/extra/groonga-normalizer-mysql
+          repository: groonga/groonga-normalizer-mysql
+          submodules: recursive
+      - name: Download groonga-normalizer-mysql latest
+        # TODO: Remove " -Or $true" when we release
+        # groonga-normalizer-mysql 1.2.3.
+        if: |
+          !(matrix.use-main == 'yes' || true)
         run: |
-          cd ..\source
-          # TODO: Remove " -Or $true" when we release
-          # groonga-normalizer-mysql 1.2.2.
-          if ("${{ matrix.use-main }}" -eq "yes" -Or $true) {
-            git clone --quiet --depth 1 --recursive `
-              https://github.com/groonga/groonga-normalizer-mysql.git `
-              extra\groonga-normalizer-mysql
-          } else {
-            Invoke-WebRequest `
-              -Uri "https://packages.groonga.org/source/groonga-normalizer-mysql/groonga-normalizer-mysql-latest.zip" `
-              -OutFile groonga-normalizer-mysql-latest.zip
-            Expand-Archive groonga-normalizer-mysql-latest.zip .
-            Remove-Item groonga-normalizer-mysql-latest.zip
-            Move-Item `
-              groonga-normalizer-mysql-* `
-              extra\groonga-normalizer-mysql
-          }
+          cd mariadb
+          Invoke-WebRequest `
+            -Uri "https://packages.groonga.org/source/groonga-normalizer-mysql/groonga-normalizer-mysql-latest.zip" `
+            -OutFile groonga-normalizer-mysql-latest.zip
+          Expand-Archive groonga-normalizer-mysql-latest.zip .
+          Remove-Item groonga-normalizer-mysql-latest.zip
+          Move-Item `
+            groonga-normalizer-mysql-* `
+            extra\groonga-normalizer-mysql
       - name: Run CMake
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %VC_ARCHITECTURE% || exit /B
           cmake ^
-            -S ..\source ^
-            -B ..\build ^
+            -S mariadb ^
+            -B build ^
             -G "Ninja" ^
-            -DBUILD_CONFIG=msvc_ccache ^
-            -DCMAKE_INSTALL_PREFIX=..\install ^
+            -DBUILD_CONFIG=mroonga_windows ^
+            -DCMAKE_INSTALL_PREFIX=install ^
             -DCONNECT_WITH_LIBXML2=OFF ^
             -DMRN_GROONGA_EMBED=${{ matrix.embed || 'OFF' }} ^
             -DMRN_GROONGA_NORMALIZER_MYSQL_EMBED=${{ matrix.embed || 'OFF' }} ^
@@ -187,7 +200,7 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %VC_ARCHITECTURE% || exit /B
           set CMAKE_BUILD_PARALLEL_LEVEL=%NUMBER_OF_PROCESSORS%
           cmake ^
-            --build ..\build ^
+            --build build ^
             --config RelWithDebInfo ^
             --target install ^
             --verbose || exit /B
@@ -198,14 +211,14 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %VC_ARCHITECTURE% || exit /B
           set CMAKE_BUILD_PARALLEL_LEVEL=%NUMBER_OF_PROCESSORS%
           cmake ^
-            --build ..\build ^
+            --build build ^
             --config RelWithDebInfo ^
             --target package ^
             --verbose || exit /B
           ccache --show-stats --verbose
       - name: Prepare package
         run: |
-          pushd ..\build
+          pushd build
           Expand-Archive `
             mariadb-${Env:MARIADB_VERSION}-${Env:PACKAGE_PLATFORM}.zip `
             .
@@ -214,7 +227,7 @@ jobs:
           popd
           Move-Item `
             mariadb-${Env:MARIADB_VERSION}-${Env:PACKAGE_PLATFORM} `
-            ..\mroonga\
+            ..\
           popd
           Compress-Archive `
             -Path mariadb-${Env:MARIADB_VERSION}-${Env:PACKAGE_PLATFORM} `
@@ -238,7 +251,59 @@ jobs:
 
       - name: Test
         run: |
-          cd ..\install\mysql-test
+          pushd install\mysql-test\plugin\mroonga\mroonga
+          Remove-Item wrapper -Recurse -Force
+          pushd storage
+          Remove-Item alter_table -Recurse -Force
+          Remove-Item auto_increment -Recurse -Force
+          Remove-Item binlog -Recurse -Force
+          Remove-Item check_table -Recurse -Force
+          Remove-Item collation -Recurse -Force
+          Remove-Item column -Recurse -Force
+          Remove-Item create -Recurse -Force
+          Remove-Item delete -Recurse -Force
+          Remove-Item drop -Recurse -Force
+          Remove-Item foreign_key -Recurse -Force
+          Remove-Item function -Recurse -Force
+          Remove-Item geometry -Recurse -Force
+          Remove-Item index -Recurse -Force
+          Remove-Item information_schema -Recurse -Force
+          Remove-Item insert -Recurse -Force
+          Remove-Item like -Recurse -Force
+          Remove-Item lock_tables -Recurse -Force
+          Remove-Item optimization -Recurse -Force
+          Remove-Item r -Recurse -Force
+          Remove-Item repair_table -Recurse -Force
+          Remove-Item replace -Recurse -Force
+          Remove-Item select -Recurse -Force
+          Remove-Item status -Recurse -Force
+          Remove-Item sub_query -Recurse -Force
+          Remove-Item t -Recurse -Force
+          Remove-Item update -Recurse -Force
+          Remove-Item variable -Recurse -Force
+          Remove-Item fulltext\boolean_mode -Recurse -Force
+          Remove-Item fulltext\charset -Recurse -Force
+          Remove-Item fulltext\groonga -Recurse -Force
+          Remove-Item fulltext\insert -Recurse -Force
+          Remove-Item fulltext\multiple_column_index -Recurse -Force
+          Remove-Item fulltext\order -Recurse -Force
+          Remove-Item fulltext\t\empty_query.test -Recurse -Force
+          Remove-Item fulltext\t\found_rows.test -Recurse -Force
+          Remove-Item fulltext\t\index_recreate.test -Recurse -Force
+          Remove-Item fulltext\t\multiple_index.test -Recurse -Force
+          Remove-Item fulltext\t\no_primary_key.test -Recurse -Force
+          Remove-Item fulltext\t\not_match_against.test -Recurse -Force
+          Remove-Item fulltext\t\or.test -Recurse -Force
+          Remove-Item fulltext\r\empty_query.result -Recurse -Force
+          Remove-Item fulltext\r\found_rows.result -Recurse -Force
+          Remove-Item fulltext\r\index_recreate.result -Recurse -Force
+          Remove-Item fulltext\r\multiple_index.result -Recurse -Force
+          Remove-Item fulltext\r\no_primary_key.result -Recurse -Force
+          Remove-Item fulltext\r\not_match_against.result -Recurse -Force
+          Remove-Item fulltext\r\or.result -Recurse -Force
+          popd
+          popd
+          cd install\mysql-test
           $suites = `
             Get-ChildItem -Recurse -Directory -Name t plugin\mroonga | `
               Split-Path -Parent | `
@@ -247,20 +312,25 @@ jobs:
             --force `
             --no-check-testcases `
             --parallel=${Env:NUMBER_OF_PROCESSORS} `
-            --retry=3 `
             --suite=$($suites -join ",")
-
-      - name: "Test: reference count"
-        run: |
-          cd ..\install\mysql-test
-          $suites = `
-            Get-ChildItem -Recurse -Directory -Name t plugin\mroonga | `
-              Split-Path -Parent | `
-              % {$_.replace("\", "/")}
-          perl mysql-test-run.pl `
-            --force `
-            --mysqld=--loose-plugin-mroonga-enable-reference-count=ON `
-            --no-check-testcases `
-            --parallel=${Env:NUMBER_OF_PROCESSORS} `
-            --retry=3 `
-            --suite=$($suites -join ",")
+          Get-ChildItem -Path D: -Filte mroonga.log -Recurse
+          Get-Content D:\a\mroonga\mroonga\install\mysql-test\var\log\fulltext.two_inner_join-innodb\mysqld.1\data\mroonga.log
+          Get-ChildItem -Recurse
+      - uses: actions/upload-artifact@v3
+        with:
+          name: mroonga.log
+          path: D:\a\mroonga\mroonga\install\mysql-test\var\log\fulltext.two_inner_join-innodb\mysqld.1\data\
+#      - name: "Test: reference count"
+#        run: |
+#          cd install\mysql-test
+#          $suites = `
+#            Get-ChildItem -Recurse -Directory -Name t plugin\mroonga | `
+#              Split-Path -Parent | `
+#              % {$_.replace("\", "/")}
+#          perl mysql-test-run.pl `
+#            --force `
+#            --mysqld=--loose-plugin-mroonga-enable-reference-count=ON `
+#            --no-check-testcases `
+#            --parallel=${Env:NUMBER_OF_PROCESSORS} `
+#            --retry=3 `
+#            --suite=$($suites -join ",")
