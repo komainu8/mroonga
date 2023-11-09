@@ -314,22 +314,12 @@ jobs:
             --parallel=${Env:NUMBER_OF_PROCESSORS} `
             --suite=$($suites -join ",")
           Get-ChildItem -Path D: -Filte mroonga.log -Recurse
-          Get-Item D:/a/mroonga/mroonga/install/mysql-test/var/log/fulltext.two_inner_join-innodb/*
-          Get-Item D:/a/mroonga/mroonga/install/mysql-test/var/1/log/mroonga/storage/*
-          Get-Item D:/a/mroonga/mroonga/install/mysql-test/var/1/log/mroonga/*
-          Get-Item D:/a/mroonga/mroonga/install/mysql-test/var/1/log/*
-          Get-Item D:/a/mroonga/mroonga/install/mysql-test/var/1/*
-          Get-Item D:/a/mroonga/mroonga/install/mysql-test/var/*
-          Get-Item D:/a/mroonga/mroonga/install/mysql-test/*
-          Get-Item D:/a/mroonga/mroonga/install/*
-          Get-Item D:/a/mroonga/mroonga/*
-          Get-Item D:/a/mroonga/*
-          Get-Item D:/a/*
-          Get-Item D:/*
+          Get-Content D:\a\mroonga\mroonga\install\mysql-test\var\log\fulltext.two_inner_join-innodb\mysqld.1\data\mroonga.log
+          Get-ChildItem -Recurse
       - uses: actions/upload-artifact@v3
         with:
           name: mroonga.log
-          path: mroonga.log
+          path: D:\a\mroonga\mroonga\install\mysql-test\var\log\fulltext.two_inner_join-innodb\mysqld.1\data\
 #      - name: "Test: reference count"
 #        run: |
 #          cd install\mysql-test
