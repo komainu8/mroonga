@@ -1000,6 +1000,7 @@ typedef uint mrn_srid;
 // for details.
 #  define MRN_WARN_DEPRECATED(thd, what, to)                         \
   (warn_deprecated<999999>(thd, what, to))
+#  define HAVE_PSI_INTERFACE
 #else
   using mrn_io_and_cpu_cost = double;
   using mrn_handler_get_foreign_key_list_thread = THD;
