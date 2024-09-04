@@ -2,8 +2,7 @@ name: Linux
 on:
   push:
     branches:
-      - main
-      - "maintenance/**"
+      - "*"
     tags:
       - "*"
   pull_request:
