@@ -59,7 +59,8 @@ jobs:
         run: |
           package_type=yum
           os_version=$(echo ${{ matrix.image }} | awk -F "/" '{print $2}')
-          options=(${{ matrix.package }}-mroonga ${os_version})
+          package_name=${{ matrix.package }}-mroonga
+          options=(${package_name} ${os_version})
           sudo incus exec target \
             -- \
             /host/packages/${package_type}/install_test.sh \
