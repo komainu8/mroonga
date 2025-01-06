@@ -1,4 +1,4 @@
-name: Install to Ubuntu
+name: Install to Ubuntu/AlmaLinux
 on:
   push:
   schedule:
@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   install:
-    name: Install to Ubuntu
+    name: Install to Ubuntu/AlmaLinux
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
