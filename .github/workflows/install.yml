@@ -1,4 +1,4 @@
-name: Install to Ubuntu/AlmaLinux
+name: Install Mroonga
 on:
   push:
   schedule:
@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   install:
-    name: Install to Ubuntu/AlmaLinux
+    name: Install to Mroonga
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
