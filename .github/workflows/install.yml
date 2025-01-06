@@ -61,7 +61,8 @@ jobs:
           package_name=${{ matrix.package }}-mroonga
           sudo incus exec target \
             -- \
-            /host/packages/${package_type}/install_test.sh
+            /host/packages/${package_type}/install_test.sh \
+              ${package_name} ${os_version}
       - name: Delete container
         run: |
           sudo incus stop target
