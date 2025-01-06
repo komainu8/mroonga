@@ -62,7 +62,7 @@ jobs:
               ;;
             *)
               package_type=yum
-              os_version=$(echo ${{ matrix.images }} | awk -F "/" '{print $2}')
+              os_version=$(echo ${{ matrix.image }} | awk -F "/" '{print $2}')
               install_options="${{ matrix.package }}-mroonga ${os_version}"
               ;;
           esac
