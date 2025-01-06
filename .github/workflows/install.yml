@@ -56,21 +56,12 @@ jobs:
           echo "Test"
       - name: Install Mroonga
         run: |
-          case ${{ matrix.image }} in
-#            images:ubuntu/*)
-#              package_type=apt
-#              install_options="${{ matrix.package }}-mroonga"
-#              ;;
-            *)
-              package_type=yum
-              os_version=$(echo ${{ matrix.image }} | awk -F "/" '{print $2}')
-              install_options="${{ matrix.package }}-mroonga ${os_version}"
-              ;;
-          esac
+          package_type=yum
+          os_version=$(echo ${{ matrix.image }} | awk -F "/" '{print $2}')
           sudo incus exec target \
             -- \
             /host/packages/${package_type}/install_test.sh \
-              "${install_options}"
+              ${{ matrix.package }}-mroonga ${os_version}
       - name: Delete container
         run: |
           sudo incus stop target
