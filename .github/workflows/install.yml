@@ -25,6 +25,7 @@ jobs:
 #            package: mariadb
 #          - image: "images:ubuntu/24.04"
 #            package: mysql
+          #AlmaLinux with MariaDB 10.5
           - image: "images:almalinux/8"
             package: mariadb-10.5
 #          - image: "images:almalinux/8"
