@@ -59,7 +59,7 @@ jobs:
           package_type=yum
           os_version=$(echo ${{ matrix.image }} | awk -F "/" '{print $2}')
           package_name=${{ matrix.package }}-mroonga
-          hoge=(${package_name} ${os_version})
+          hoge=("${package_name}" "${os_version}")
           sudo incus exec target \
             -- \
             /host/packages/${package_type}/install_test.sh
