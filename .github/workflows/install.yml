@@ -54,6 +54,7 @@ jobs:
           # Wait for network services stabilizing
           sleep 1 # Wait for systemd ready
           sudo incus exec target -- sudo systemctl is-system-running --wait
+          echo "Test"
       - name: Install Mroonga
         run: |
           package_type=yum
