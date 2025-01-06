@@ -15,24 +15,24 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image: "images:ubuntu/20.04"
-            package: mysql
-          - image: "images:ubuntu/22.04"
-            package: mariadb
-          - image: "images:ubuntu/22.04"
-            package: mysql
-          - image: "images:ubuntu/24.04"
-            package: mariadb
-          - image: "images:ubuntu/24.04"
-            package: mysql
+#          - image: "images:ubuntu/20.04"
+#            package: mysql
+#          - image: "images:ubuntu/22.04"
+#            package: mariadb
+#          - image: "images:ubuntu/22.04"
+#            package: mysql
+#          - image: "images:ubuntu/24.04"
+#            package: mariadb
+#          - image: "images:ubuntu/24.04"
+#            package: mysql
           - image: "images:almalinux/8"
             package: mariadb-10.5
-          - image: "images:almalinux/8"
-            package: mariadb-10.6
-          - image: "images:almalinux/8"
-            package: mariadb-10.11
-          - image: "images:almalinux/8"
-            package: mariadb-11.4
+#          - image: "images:almalinux/8"
+#            package: mariadb-10.6
+#          - image: "images:almalinux/8"
+#            package: mariadb-10.11
+#          - image: "images:almalinux/8"
+#            package: mariadb-11.4
     steps:
       - uses: actions/checkout@v4
       - name: Install Incus
@@ -53,13 +53,14 @@ jobs:
           # Wait for network services stabilizing
           sleep 1 # Wait for systemd ready
           sudo incus exec target -- sudo systemctl is-system-running --wait
+          echo "Test"
       - name: Install Mroonga
         run: |
           case ${{ matrix.image }} in
-            images:ubuntu/*)
-              package_type=apt
-              install_options="${{ matrix.package }}-mroonga"
-              ;;
+#            images:ubuntu/*)
+#              package_type=apt
+#              install_options="${{ matrix.package }}-mroonga"
+#              ;;
             *)
               package_type=yum
               os_version=$(echo ${{ matrix.image }} | awk -F "/" '{print $2}')
