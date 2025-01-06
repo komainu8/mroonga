@@ -63,8 +63,8 @@ jobs:
           options=(${package_name} ${os_version})
           sudo incus exec target \
             -- \
-            /host/packages/${package_type}/install_test.sh \
-              ${options[@]}
+            /host/packages/${package_type}/install_test.sh
+#              ${options[@]}
       - name: Delete container
         run: |
           sudo incus stop target
