@@ -206,6 +206,11 @@ jobs:
           - os: almalinux-9
             package: percona-server-8.0
             test-image: "images:almalinux/9"
+
+          # Percona Server 8.0
+          - os: almalinux-8
+            package: percona-server-8.4
+            test-image: "images:almalinux/8"
     env:
       APACHE_ARROW_REPOSITORY: ${{ github.workspace }}/apache-arrow
     runs-on: ubuntu-24.04
