@@ -20,5 +20,5 @@ class PerconaServer84MroongaPackageTask < MroongaPackageTask
   end
 end
 
-task = PerconaServer80MroongaPackageTask.new
+task = PerconaServer84MroongaPackageTask.new
 task.define
