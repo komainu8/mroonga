@@ -146,7 +146,8 @@ jobs:
           cd mariadb
           if ("${Env:MARIADB_VERSION}" -match "^10\.5|^10\.6|^10\.11|^11\.4") {
             ridk exec patch -p1 -i `
-              storage\mroonga\packages\source\patches\mariadb-10.5.5-add-a-missing-export-symbol.diff
+              storage\mroonga\packages\source\patches\mariadb-10.5.5-add-a-missing-export-symbol.diff `
+              storage\mroonga\packages\source\patches\mariadb-add-missing-explicit-cast.diff
           }
           Copy-Item storage\mroonga\build\mroonga_windows.cmake cmake\build_configurations\
       - uses: actions/checkout@v4

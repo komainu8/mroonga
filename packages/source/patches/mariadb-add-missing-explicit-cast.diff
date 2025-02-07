@@ -1,0 +1,13 @@
+--- mariadb-11.4.5.orig/mysys/mf_keycache.c	2025-01-31 02:54:55.000000000 +0900
++++ mariadb-11.4.5/mysys/mf_keycache.c	2025-02-07 12:15:36.765194281 +0900
+@@ -3762,8 +3762,8 @@
+ 
+ static int cmp_sec_link(const void *_a, const void *_b)
+ {
+-  BLOCK_LINK *const *a= _a;
+-  BLOCK_LINK *const *b= _b;
++  BLOCK_LINK *const *a= (BLOCK_LINK *const *)_a;
++  BLOCK_LINK *const *b= (BLOCK_LINK *const *)_b;
+   return (((*a)->hash_link->diskpos < (*b)->hash_link->diskpos) ? -1 :
+       ((*a)->hash_link->diskpos > (*b)->hash_link->diskpos) ? 1 : 0);
+ }
