@@ -47,7 +47,7 @@ jobs:
     env:
       PACKAGE_PLATFORM: "winx64"
       VC_ARCHITECTURE: "x64"
-    runs-on: windows-2025
+    runs-on: windows-2022
     timeout-minutes: 45
     steps:
       - name: Disable crash dialog
