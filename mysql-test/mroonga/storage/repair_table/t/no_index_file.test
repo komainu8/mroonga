@@ -35,7 +35,7 @@ INSERT INTO diaries (title, body) VALUES ("Groonga (2)", "started Groonga.");
 
 SELECT * FROM diaries WHERE MATCH(body) AGAINST("+starting" IN BOOLEAN MODE);
 
---remove_file $MYSQLD_DATADIR/repair_test.mrn.0000000
+--remove_file $MYSQLD_DATADIR/repair_test.mrn.0000110.c
 
 FLUSH TABLES;
 
