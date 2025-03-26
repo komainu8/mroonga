@@ -37,6 +37,7 @@ INSERT INTO diaries (title, body) VALUES ("groonga (2)", "started groonga.");
 
 SELECT * FROM diaries WHERE MATCH(body) AGAINST("starting");
 
+--exec ls -al $MYSQLD_DATADIR
 --remove_file $MYSQLD_DATADIR/repair_test.mrn.0000000
 
 FLUSH TABLES;
