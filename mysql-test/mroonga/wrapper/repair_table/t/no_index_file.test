@@ -38,11 +38,11 @@ INSERT INTO diaries (title, body) VALUES ("groonga (2)", "started groonga.");
 SELECT * FROM diaries WHERE MATCH(body) AGAINST("starting");
 
 --exec ls -al $MYSQLD_DATADIR
---remove_file $MYSQLD_DATADIR/repair_test.mrn.0000000
+--remove_file $MYSQLD_DATADIR/repair_test.mrn.0000100
 
 FLUSH TABLES;
 
-# Error ER_CANT_OPEN_FILE system call error: No such file or directory: [io][open] failed to open path: <repair_test.mrn.0000000>
+# Error ER_CANT_OPEN_FILE system call error: No such file or directory: [io][open] failed to open path: <repair_test.mrn.0000100>
 --replace_result "[io][open] " ""
 --error ER_CANT_OPEN_FILE
 SELECT * FROM diaries WHERE MATCH(body) AGAINST("starting");
