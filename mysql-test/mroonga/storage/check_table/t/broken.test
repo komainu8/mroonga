@@ -30,8 +30,7 @@ CREATE TABLE diaries (
 
 INSERT INTO diaries VALUES ('Hello');
 
---exec ls -al $MYSQLD_DATADIR
---remove_file $MYSQLD_DATADIR/test.mrn.0000000
+--remove_file $MYSQLD_DATADIR/check_test.mrn.0000000
 
 FLUSH TABLES;
 
