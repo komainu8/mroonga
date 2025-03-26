@@ -34,8 +34,10 @@ INSERT INTO diaries VALUES ('Hello');
 
 FLUSH TABLES;
 
+--replace_result "[io][open] " ""
 CHECK TABLE diaries;
 
+--replace_result "[io][open] " ""
 REPAIR TABLE diaries;
 
 SELECT *
