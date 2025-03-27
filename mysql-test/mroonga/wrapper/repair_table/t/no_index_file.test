@@ -42,8 +42,7 @@ FLUSH TABLES;
 
 # Error ER_CANT_OPEN_FILE system call error: No such file or directory: [io][open] failed to open path: <repair_test.mrn.000010D>
 --replace_result "[io][open] " ""
-SELECT * FROM diaries WHERE MATCH(body) AGAINST("starting");
-EXPLAIN SELECT * FROM diaries WHERE MATCH(body) AGAINST("starting");
+ANALYZE SELECT * FROM diaries WHERE MATCH(body) AGAINST("starting");
 
 
 --replace_result "[io][open] " ""
