@@ -45,7 +45,7 @@ FLUSH TABLES;
 SELECT * FROM diaries WHERE MATCH(body) AGAINST("starting");
 
 --exec ls -al $MYSQLD_DATADIR
---remove_files $MYSQLD_DATADIR/repair_test.mrn.*
+--remove_files_wildcard $MYSQLD_DATADIR repair_test.mrn*
 
 # Error ER_CANT_OPEN_FILE system call error: No such file or directory: [io][open] failed to open path: <repair_test.mrn.000010D>
 --replace_result "[io][open] " ""
