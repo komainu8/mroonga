@@ -38,7 +38,7 @@ INSERT INTO diaries (title, body) VALUES ("groonga (2)", "started groonga.");
 FLUSH TABLES;
 
 --exec ls -al $MYSQLD_DATADIR
---remove_files_wildcard $MYSQLD_DATADIR repair_test.mrn.*
+--remove_files_wildcard $MYSQLD_DATADIR repair_test.mrn.00001*
 --exec ls -al $MYSQLD_DATADIR
 
 # Error ER_CANT_OPEN_FILE system call error: No such file or directory: [io][open] failed to open path: <repair_test.mrn.000010D>
