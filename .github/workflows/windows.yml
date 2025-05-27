@@ -228,8 +228,8 @@ jobs:
           set CMAKE_BUILD_PARALLEL_LEVEL=%NUMBER_OF_PROCESSORS%
           pwd
           ls -al
-          ls -al storage
-          Get-Content -Path storage/mroonga/cmake_install.cmake
+          ls -al build
+          Get-Content -Path build\storage\mroonga\cmake_install.cmake
           type storage/mroonga/cmake_install.cmake
           cmake ^
             --build build ^
