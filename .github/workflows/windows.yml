@@ -227,7 +227,8 @@ jobs:
           call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %VC_ARCHITECTURE% || exit /B
           set CMAKE_BUILD_PARALLEL_LEVEL=%NUMBER_OF_PROCESSORS%
           pwd
-          Get-Content storage/mroonga/cmake_install.cmake
+          Get-Content -Path storage/mroonga/cmake_install.cmake
+          type storage/mroonga/cmake_install.cmake
           cmake ^
             --build build ^
             --config RelWithDebInfo ^
