@@ -224,7 +224,7 @@ jobs:
       - name: Output cmake install
         shell: pwsh
         run: |
-          ls -al build\storage\mroonga
+          ls build\storage\mroonga
           Get-Content -Path build\storage\mroonga\cmake_install.cmake
       - name: Install
         shell: cmd
