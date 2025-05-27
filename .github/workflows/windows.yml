@@ -39,7 +39,7 @@ jobs:
         include:
 #          - mariadb-release: "10.5"
 #          - mariadb-release: "10.6"
-          - mariadb-release: "10.11"
+#          - mariadb-release: "10.11"
           - mariadb-release: "11.4"
 #          - mariadb-release: "11.4"
 #            use-main: "yes"
@@ -76,7 +76,7 @@ jobs:
           $latestRelease = (($releasesResponse.releases | `
                                Get-Member -MemberType NoteProperty).Name | `
                               Sort-Object -Property {[Version]$_})[-1]
-          $mariaDBVersion = $latestRelease
+          $mariaDBVersion = 11.4.6
           Write-Output "MARIADB_VERSION=${mariaDBVersion}" | `
             Out-File -FilePath ${Env:GITHUB_ENV} -Encoding utf8 -Append
       - name: Cache MariaDB archive
