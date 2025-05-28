@@ -232,6 +232,7 @@ jobs:
           Write-Output "AAA"
           ls
           Get-Content -Path mariadb\storage\mroonga\CMakeLists.txt
+          ls build/storage/mroonga/groonga/lib/
       - name: Install
         shell: cmd
         run: |
