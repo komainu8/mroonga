@@ -163,7 +163,7 @@ jobs:
         shell: pwsh
         run: |
           cd mariadb
-          (Get-Content cmake/install_macros.cmake) | foreach { $_ " runtime_deps_set_name ", " runtime_deps_set_name libgroonga " } | Set-Content cmake/install_macros.cmake
+          (Get-Content cmake/install_macros.cmake) | foreach { $_ -replace " runtime_deps_set_name ", " runtime_deps_set_name libgroonga " } | Set-Content cmake/install_macros.cmake
           Get-Content cmake/install_macros.cmake
       - name: Prepare Groonga
         run: |
