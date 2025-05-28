@@ -465,7 +465,6 @@ endif()
 
 if(WIN32)
   target_link_directories(mroonga PRIVATE
-    "${MRN_BUNDLED_GROONGA_DIR}/vendor/groonga/lib"
     "${MYSQL_BUILD_DIR}/lib"
     "${MYSQL_BUILD_DIR}/libmysqld")
 endif()

@@ -236,6 +236,10 @@ jobs:
             --config RelWithDebInfo ^
             --target install ^
             --verbose || exit /B
+          pwd
+          ls
+          ls build/storage/mroonga/groonga/lib/
+          ls install
           ccache --show-stats --verbose
       - name: Create package
         shell: cmd
