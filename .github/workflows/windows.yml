@@ -241,10 +241,10 @@ jobs:
       - name: Remove exclude path
         shell: pwsh
         run: |
-          (Get-Content -Path build\storage\mroonga\cmake_install.cmake) | foreach { $_ -replace "\"D:/a/mroonga/mroonga/build/storage/mroonga/groonga/lib/libgroonga.dll\"", "" } | Set-Content build\storage\mroonga\cmake_install.cmake
-          (Get-Content -Path build\storage\mroonga\cmake_install.cmake) | foreach { $_ -replace "\"D:/a/mroonga/mroonga/build/bin/groonga-ggml-base.dll\"", "" } | Set-Content build\storage\mroonga\cmake_install.cmake
-          (Get-Content -Path build\storage\mroonga\cmake_install.cmake) | foreach { $_ -replace "\"D:/a/mroonga/mroonga/build/bin/groonga-ggml.dll\"", "" } | Set-Content build\storage\mroonga\cmake_install.cmake
-          (Get-Content -Path build\storage\mroonga\cmake_install.cmake) | foreach { $_ -replace "\"D:/a/mroonga/mroonga/build/bin/groonga-llama.dll\"", "" } | Set-Content build\storage\mroonga\cmake_install.cmake
+          (Get-Content -Path build\storage\mroonga\cmake_install.cmake) | foreach { $_ -replace "D:/a/mroonga/mroonga/build/storage/mroonga/groonga/lib/libgroonga.dll", "" } | Set-Content build\storage\mroonga\cmake_install.cmake
+          (Get-Content -Path build\storage\mroonga\cmake_install.cmake) | foreach { $_ -replace "D:/a/mroonga/mroonga/build/bin/groonga-ggml-base.dll", "" } | Set-Content build\storage\mroonga\cmake_install.cmake
+          (Get-Content -Path build\storage\mroonga\cmake_install.cmake) | foreach { $_ -replace "D:/a/mroonga/mroonga/build/bin/groonga-ggml.dll", "" } | Set-Content build\storage\mroonga\cmake_install.cmake
+          (Get-Content -Path build\storage\mroonga\cmake_install.cmake) | foreach { $_ -replace "D:/a/mroonga/mroonga/build/bin/groonga-llama.dll", "" } | Set-Content build\storage\mroonga\cmake_install.cmake
       - name: Install
         shell: cmd
         run: |
