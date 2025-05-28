@@ -243,6 +243,8 @@ jobs:
           pwd
           ls install
           pwd
+          ls build/bin/
+          pwd
           ccache --show-stats --verbose
       - name: Create package
         shell: cmd
