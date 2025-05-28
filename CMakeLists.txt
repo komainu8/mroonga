@@ -570,6 +570,10 @@ if(MSVC)
   install(FILES $<TARGET_PDB_FILE:mroonga>
     DESTINATION "${MYSQL_PLUGIN_DIR}"
     OPTIONAL)
+  install(
+  RUNTIME_DEPENDENCY_SET mroonga
+  DIRECTORIES
+  "D:/a/mroonga/mroonga/build/storage/mroonga/groonga/lib/libgroonga.dll")
 endif()
 
 if(NOT MRN_BUNDLED)
