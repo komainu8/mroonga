@@ -231,7 +231,7 @@ jobs:
           ls build
           Write-Output "AAA"
           ls
-          Get-Content -Path mariadb\CMakeLists.txt
+          Get-Content -Path mariadb\storage\mroonga\CMakeLists.txt
       - name: Install
         shell: cmd
         run: |
