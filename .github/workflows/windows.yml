@@ -227,7 +227,7 @@ jobs:
           ls build\storage\mroonga
           Write-Output "AAA"
           ls build
-          Get-Content -Path build\CmakeLists.txt
+          Get-Content -Path CmakeLists.txt
           Write-Output "AAA"
           ls
           Get-Content -Path build\storage\mroonga\cmake_install.cmake
