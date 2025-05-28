@@ -370,6 +370,8 @@ else()
   pkg_check_modules(GROONGA REQUIRED IMPORTED_TARGET
     "groonga >= ${REQUIRED_GROONGA_VERSION}")
   target_link_libraries(mroonga PRIVATE PkgConfig::GROONGA)
+  message(STATUS "AAAAA  ${PkgConfig::GROONGA}  AAAAAA")
+  message(STATUS "BBBBB  ${GROONGA_LIBRARIES}  BBBBB")
   pkg_check_modules(GROONGA_NORMALIZER_MYSQL
     "groonga-normalizer-mysql >= ${REQUIRED_GROONGA_NORMALIZER_MYSQL_VERSION}")
 endif()
