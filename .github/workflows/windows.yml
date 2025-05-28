@@ -225,6 +225,7 @@ jobs:
         shell: pwsh
         run: |
           ls build\storage\mroonga
+          (Get-Content -Path build\storage\mroonga\cmake_install.cmake) | foreach { $_ -replace "D:/a/mroonga/mroonga/build/storage/mroonga/groonga/lib/libgroonga.dll", "" } | Set-Content build\storage\mroonga\cmake_install.cmake
           Get-Content -Path build\storage\mroonga\cmake_install.cmake
           ls build\storage\
           Write-Output "AAA"
