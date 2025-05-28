@@ -362,7 +362,7 @@ if(MRN_GROONGA_BUNDLED)
     "${MRN_BUNDLED_GROONGA_DIR}/include"
     "${CMAKE_CURRENT_BINARY_DIR}/groonga/include")
   message(STATUS "CCCCC CCCC")
-  target_link_libraries(mroonga libgroonga)
+  target_link_libraries(mroonga "${CMAKE_BINARY_DIR}/storage/mroonga/groonga/lib/libgroonga")
   if(TARGET mysql_normalizer AND MRN_GROONGA_NORMALIZER_MYSQL_EMBED)
     target_link_libraries(mroonga mysql_normalizer)
   endif()
