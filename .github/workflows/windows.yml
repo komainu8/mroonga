@@ -238,8 +238,11 @@ jobs:
             --verbose || exit /B
           pwd
           ls
+          pwd
           ls build/storage/mroonga/groonga/lib/
+          pwd
           ls install
+          pwd
           ccache --show-stats --verbose
       - name: Create package
         shell: cmd
