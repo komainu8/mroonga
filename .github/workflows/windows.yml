@@ -228,10 +228,10 @@ jobs:
           Get-Content -Path build\storage\mroonga\cmake_install.cmake
           ls build\storage\
           Write-Output "AAA"
-          Get-Content -Path build\storage\mroonga\CMakeLists.txt
           ls build
           Write-Output "AAA"
           ls
+          Get-Content -Path build\storage\mroonga\CMakeLists.txt
       - name: Install
         shell: cmd
         run: |
