@@ -76,7 +76,7 @@ jobs:
           $latestRelease = (($releasesResponse.releases | `
                                Get-Member -MemberType NoteProperty).Name | `
                               Sort-Object -Property {[Version]$_})[-1]
-          $mariaDBVersion = $latestRelease
+          $mariaDBVersion = "11.4.5"
           Write-Output "MARIADB_VERSION=${mariaDBVersion}" | `
             Out-File -FilePath ${Env:GITHUB_ENV} -Encoding utf8 -Append
       - name: Cache MariaDB archive
@@ -90,14 +90,14 @@ jobs:
           if (-not(Test-Path -Path ${mariadbTarGz})) {
             New-Item download -ItemType Directory -Force
             Invoke-WebRequest `
-              -Uri "https://downloads.mariadb.org/rest-api/mariadb/11.4.5/mariadb-11.4.5.tar.gz" `
+              -Uri "https://downloads.mariadb.org/rest-api/mariadb/11.4/mariadb-11.4.5.tar.gz" `
               -OutFile ${mariadbTarGz} `
               -Verbose
           }
           # Workaround for: https://jira.mariadb.org/browse/MDEV-33493
           ridk exec tar xzf "${mariadbTarGz}" `
             --exclude=storage/spider/mysql-test/spider/bugfix/r/udf_mysql_func_early_init_file.result
-          Move-Item mariadb-11.4.5 mariadb
+          Move-Item mariadb-${Env:MARIADB_VERSION} mariadb
           Remove-Item mariadb\storage\mroonga -Recurse -Force
       - uses: actions/checkout@v4
         with:
