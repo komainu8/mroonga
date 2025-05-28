@@ -90,7 +90,7 @@ jobs:
           if (-not(Test-Path -Path ${mariadbTarGz})) {
             New-Item download -ItemType Directory -Force
             Invoke-WebRequest `
-              -Uri "https://downloads.mariadb.org/rest-api/mariadb/11.4/mariadb-11.4.5.tar.gz" `
+              -Uri "https://downloads.mariadb.org/rest-api/mariadb/11.4.5/mariadb-11.4.5.tar.gz" `
               -OutFile ${mariadbTarGz} `
               -Verbose
           }
