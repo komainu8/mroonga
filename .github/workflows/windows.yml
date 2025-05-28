@@ -230,7 +230,7 @@ jobs:
           Get-Content -Path build\cmake_install.cmake
           Write-Output "AAA"
           ls
-          Get-Content -Path mariadb\storage\mroonga\CMakeLists.txt
+          Get-Content -Path build\storage\mroonga\cmake_install.cmake
           ls build/storage/mroonga/groonga/lib/
       - name: Install
         shell: cmd
