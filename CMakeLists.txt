@@ -150,6 +150,7 @@ if(MRN_GROONGA_BUNDLED)
     set(GRN_EMBED ON)
   endif()
 
+  list(APPEND MRN_LIBRARIES "libgroonga" "groonga-ggml-base" "groonga-ggml" "groonga-llama")
   set(MRN_BUNDLED_GROONGA_NORMALIZER_MYSQL_RELATIVE_DIR
     "../../extra/groonga-normalizer-mysql")
   if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${MRN_BUNDLED_GROONGA_NORMALIZER_MYSQL_RELATIVE_DIR}")
