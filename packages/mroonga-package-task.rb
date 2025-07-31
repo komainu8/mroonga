@@ -58,6 +58,9 @@ class MroongaPackageTask < PackagesGroongaOrgPackageTask
       sources.each_line do |line|
         case line.chomp
         when /\AVersion: /
+          p "AAAAAA"
+          p $POSTMATCH
+          p "AAAAAA"
           return $POSTMATCH
         end
       end
