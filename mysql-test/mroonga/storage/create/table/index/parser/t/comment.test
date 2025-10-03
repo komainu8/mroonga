@@ -31,7 +31,7 @@ CREATE TABLE diaries (
   FULLTEXT INDEX body_index (body)
     COMMENT 'parser "TokenBigramSplitSymbolAlphaDigit"'
 ) DEFAULT CHARSET utf8mb4;
---replace_result "tokenizer" "'tokenizer'"
+--replace_result tokenizer 'tokenizer'
 
 INSERT INTO diaries (body) VALUES ("will start Groonga!");
 INSERT INTO diaries (body) VALUES ("starting Groonga...");
