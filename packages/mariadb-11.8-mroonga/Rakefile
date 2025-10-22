@@ -1,6 +1,6 @@
 require_relative "../mroonga-package-task"
 
-class MariaDB114MroongaPackageTask < MroongaPackageTask
+class MariaDB118MroongaPackageTask < MroongaPackageTask
   def initialize
     super("mariadb-11.8-mroonga")
   end
