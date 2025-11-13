@@ -27,6 +27,9 @@ override_dh_auto_configure:
 	(cd $${source_base} &&						\
 	  debian/rules override_dh_auto_configure);			\
 	(cd $${build_dir}/utilities && $(MAKE) -j$$(nproc) GenError);	\
+	if [ "$${DEB_EMULATE_LAUNCHPAD_ENVIRONMENT}" = "yes" ]; then	\
+	  echo > /etc/resolv.conf;					\
+	fi								\
 	dh_auto_configure						\
 	  --buildsystem=cmake+ninja					\
 	  --								\

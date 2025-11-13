@@ -40,6 +40,9 @@ override_dh_auto_configure:
 	  debian/rules override_dh_auto_configure);			\
 	(cd $${build_dir}/storage/perfschema &&				\
 	  $(MAKE) -j$$(nproc) perfschema);				\
+	if [ "$${DEB_EMULATE_LAUNCHPAD_ENVIRONMENT}" = "yes" ]; then	\
+	  echo > /etc/resolv.conf;					\
+	fi								\
 	dh_auto_configure						\
 	  --buildsystem=cmake+ninja					\
 	  --								\
