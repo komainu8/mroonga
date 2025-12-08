@@ -59,6 +59,8 @@ jobs:
           # Debian 12
           - image: "images:debian/12"
             package: mariadb
+          - image: "images:debian/12"
+            package: mysql-community-8.0
 
           # Debian 13
           - image: "images:debian/13"
