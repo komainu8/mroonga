@@ -63,6 +63,8 @@ jobs:
           # Debian 13
           - image: "images:debian/13"
             package: mariadb
+          - image: "images:debian/13"
+            package: mysql-community-8.4
 
           # Ubuntu 22.04
           - image: "images:ubuntu/22.04"
