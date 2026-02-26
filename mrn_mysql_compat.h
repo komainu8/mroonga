@@ -854,11 +854,18 @@ using TABLE_LIST = Table_ref;
 #  define MRN_ERROR_CANCEL ER_QUERY_TIMEOUT
 #endif
 
+#if defined(MRN_MARIADB_P) && (MYSQL_VERSION_ID >= 120300)
+#  define MRN_MY_ERROR_CANCEL(ctx)                                             \
+    my_error(MRN_ERROR_CANCEL, MYF(0), (ctx)->errbuf)
+#else
+#  define MRN_MY_ERROR_CANCEL(ctx) my_error(MRN_ERROR_CANCEL, MYF(0))
+#endif
+
 #ifdef MRN_ERROR_CANCEL
 #  define MRN_SET_MESSAGE_FROM_CTX(ctx, error_code)                            \
     do {                                                                       \
       if ((ctx)->rc == GRN_CANCEL) {                                           \
-        my_error(MRN_ERROR_CANCEL, MYF(0));                                    \
+        MRN_MY_ERROR_CANCEL(ctx);                                              \
       } else {                                                                 \
         my_message((error_code), (ctx)->errbuf, MYF(0));                       \
       }                                                                        \
