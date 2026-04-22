@@ -10,7 +10,7 @@ RUN \
     'dnf-command(builddep)' \
     'dnf-command(download)' \
     https://packages.groonga.org/almalinux/$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)/groonga-release-latest.noarch.rpm \
-    https://repo.mysql.com/mysql84-community-release-el$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1).rpm \
+    https://repo.mysql.com/mysql84-community-release-el$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)-3.rpm \
     https://packages.apache.org/artifactory/arrow/almalinux/$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)/apache-arrow-release-latest.rpm && \
   dnf builddep --enablerepo=crb -y ${quiet} mysql-community && \
   dnf download -y ${quiet} --source mysql-community && \
