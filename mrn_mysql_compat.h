@@ -978,6 +978,9 @@ using mrn_field_date = Field_date;
       Time_val::load_time(key, field_time->decimals(), &time);                 \
       mysql_time = MYSQL_TIME(time);                                           \
     } while (false)
+
+#  define MRN_SCHEMA_NAME_DECLARATION const char* schema_name
+#  define MRN_SCHEMA_NAME (schema_name)
 #else
 using mrn_field_datetime = Field_datetimef;
 using mrn_field_timestamp = Field_timestampf;
@@ -990,4 +993,7 @@ using mrn_field_date = Field_newdate;
         my_time_packed_from_binary(key, field_time->decimals());               \
       TIME_from_longlong_time_packed(&mysql_time, packed_time);                \
     } while (false)
+
+#  define MRN_SCHEMA_NAME_DECLARATION char* path
+#  define MRN_SCHEMA_NAME (path)
 #endif
