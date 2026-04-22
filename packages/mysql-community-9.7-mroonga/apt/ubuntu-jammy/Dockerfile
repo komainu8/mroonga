@@ -18,9 +18,11 @@ RUN \
     ca-certificates \
     gpg-agent \
     lsb-release \
+    rpm \
     software-properties-common \
     wget && \
   add-apt-repository -y ppa:groonga/ppa && \
+  rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2025 && \
   wget https://packages.groonga.org/$(lsb_release --id --short | tr 'A-Z' 'a-z')/groonga-apt-source-latest-$(lsb_release --codename --short).deb && \
   # This is a workaround.
   # We can use mysql-apt-config.deb when https://repo.mysql.com/mysql-apt-config.deb is updated to the latest version.

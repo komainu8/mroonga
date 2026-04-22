@@ -19,7 +19,9 @@ RUN \
   code_name=$(lsb_release --codename --short) && \
   apt install -y -V --no-install-recommends ${quiet} \
     ca-certificates \
+    rpm \
     wget && \
+  rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2025 && \
   wget https://packages.apache.org/artifactory/arrow/${distribution}/apache-arrow-apt-source-latest-${code_name}.deb && \
   apt install -y -V ${quiet} ./apache-arrow-apt-source-latest-${code_name}.deb && \
   wget https://packages.groonga.org/${distribution}/groonga-apt-source-latest-${code_name}.deb && \

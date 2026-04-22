@@ -17,7 +17,9 @@ RUN \
   apt install -y -V --no-install-recommends ${quiet} \
     ca-certificates \
     lsb-release \
+    rpm \
     wget && \
+  rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2025 && \
   wget https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
   apt install -y -V ${quiet} ./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
   rm apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb && \
