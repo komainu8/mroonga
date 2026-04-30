@@ -981,6 +981,8 @@ using mrn_field_date = Field_date;
 
 #  define MRN_SCHEMA_NAME_DECLARATION const char* schema_name
 #  define MRN_SCHEMA_NAME             (schema_name)
+
+#  define MRN_MULTI_EQ_FUNC MULTI_EQ_FUNC
 #else
 using mrn_field_datetime = Field_datetimef;
 using mrn_field_timestamp = Field_timestampf;
@@ -996,4 +998,6 @@ using mrn_field_date = Field_newdate;
 
 #  define MRN_SCHEMA_NAME_DECLARATION char* path
 #  define MRN_SCHEMA_NAME             (path)
+
+#  define MRN_MULTI_EQ_FUNC MULT_EQUAL_FUNC
 #endif
