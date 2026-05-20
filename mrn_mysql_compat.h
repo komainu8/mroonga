@@ -219,8 +219,13 @@ typedef HASH mrn_table_def_cache_type;
 #ifndef TIME_FUZZY_DATE
 /* For MariaDB 10. */
 #  ifdef TIME_FUZZY_DATES
-#    define TIME_FUZZY_DATE TIME_FUZZY_DATES
+#    define MRN_TIME_FUZZY_DATE TIME_FUZZY_DATES
 #  endif
+#endif
+#if (MYSQL_VERSION_ID >= 90700 && !defined(MRN_MARIADB_P))
+#  define MRN_TIME_FUZZY_DATE 0
+#else
+#  define MRN_TIME_FUZZY_DATE TIME_FUZZY_DATE
 #endif
 
 #ifdef MRN_MARIADB_P
@@ -756,9 +761,11 @@ static inline bool mrn_item_get_time(Item* item, MYSQL_TIME* my_time, THD* thd)
 {
   return item->get_date(thd, my_time, Time::Options(thd));
 }
-
-#  define MRN_ITEM_GET_DATE_FUZZY(item, time, thd)                             \
-    ((item)->get_date((thd), (time), Time::Options(TIME_FUZZY_DATES, (thd))))
+static inline bool
+mrn_item_get_date_fuzzy(Item* item, MYSQL_TIME* mysql_time, THD* thd)
+{
+  return item->get_date(thd, mysql_time, Time::Options(MRN_TIME_FUZZY_DATES, thd));
+}
 #else
 static inline bool mrn_item_get_time(Item* item, MYSQL_TIME* my_time, THD* thd)
 {
@@ -773,16 +780,53 @@ static inline bool mrn_item_get_time(Item* item, MYSQL_TIME* my_time, THD* thd)
 #  endif
 }
 
-#  define MRN_ITEM_GET_DATE_FUZZY(item, time, thd)                             \
-    ((item)->get_date((time), TIME_FUZZY_DATE))
+static inline bool
+mrn_item_get_date_fuzzy(Item* item, MYSQL_TIME* mysql_time, THD* thd)
+{
+#  if MYSQL_VERSION_ID >= 90700
+  Datetime_val date_time;
+  bool result;
+
+  result = item->val_datetime(&date_time, MRN_TIME_FUZZY_DATE);
+  if (result) {
+    datetime_to_time(&date_time);
+    *mysql_time = MYSQL_TIME(Time_val{date_time});
+  }
+  return result;
+#  else
+  return item->get_date(time, MRN_TIME_FUZZY_DATE);
+#  endif
+}
 #endif
 
+#include <field.h>
 #ifdef MRN_MARIADB_P
-#  define MRN_FIELD_GET_TIME(field, time, thd)                                 \
-    ((field)->get_date((time), Time::Options((thd))))
+template <typename T>
+static inline bool mrn_field_get_time(const T* field,
+                                      MYSQL_TIME* my_time,
+                                      THD* current_thd)
+{
+  return field->get_date(my_time, Time::Options(thd));
+}
 #  define MRN_FIELD_GET_DATE_NO_FUZZY(field, time, thd)                        \
     ((field)->get_date((time), Time::Options(TIME_CONV_NONE, (thd))))
 #else
+template <typename T>
+static inline bool mrn_field_get_time(const T* field,
+                                      MYSQL_TIME* my_time,
+                                      THD* current_thd)
+{
+#  if MYSQL_VERSION_ID >= 90700
+  Time_val time;
+  bool result;
+  result = field->val_time(&time);
+  *my_time = MYSQL_TIME(time);
+  return result;
+#  else
+  return field->get_time(my_time);
+#  endif
+}
+
 #  define MRN_FIELD_GET_TIME(field, time, thd) ((field)->get_time((time)))
 #  define MRN_FIELD_GET_DATE_NO_FUZZY(field, time, thd)                        \
     ((field)->get_date((time), 0))
@@ -1013,6 +1057,10 @@ static inline MYSQL_TIME mrn_field_time_load_from_key(const uchar* key,
 
 #if (MYSQL_VERSION_ID >= 90700 && !defined(MRN_MARIADB_P))
 #  define MRN_MULTI_EQ_FUNC MULTI_EQ_FUNC
+#  define MRN_SCHEMA_NAME_DECLARATION const char* schema_name
+#  define MRN_SCHEMA_NAME             (schema_name)
 #else
 #  define MRN_MULTI_EQ_FUNC MULT_EQUAL_FUNC
+#  define MRN_SCHEMA_NAME_DECLARATION char* path
+#  define MRN_SCHEMA_NAME             (path)
 #endif
