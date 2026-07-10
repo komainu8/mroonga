@@ -25,7 +25,6 @@ packages = [
   "mysql-8.0-mroonga",
   "mysql-community-8.4-mroonga",
   "mysql-community-9.7-mroonga",
-  "mysql-community-minimal-8.0-mroonga",
   "mysql-community-minimal-8.4-mroonga",
   "percona-server-8.0-mroonga",
   "percona-server-8.4-mroonga",
