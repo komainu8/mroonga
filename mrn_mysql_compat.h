@@ -762,12 +762,28 @@ using TABLE_LIST = Table_ref;
 #endif
 
 #ifdef MRN_MARIADB_P
-#  define MRN_FIELD_GET_TIME(field, time, thd)                                 \
-    ((field)->get_date((time), Time::Options((thd))))
+static inline bool
+mrn_field_get_time(Field* time_field, MYSQL_TIME* my_time, THD* current_thd)
+{
+  return time_field->get_date(my_time, Time::Options(current_thd));
+}
+
 #  define MRN_FIELD_GET_DATE_NO_FUZZY(field, time, thd)                        \
     ((field)->get_date((time), Time::Options(TIME_CONV_NONE, (thd))))
 #else
-#  define MRN_FIELD_GET_TIME(field, time, thd) ((field)->get_time((time)))
+static inline bool
+mrn_field_get_time(Field* time_field, MYSQL_TIME* my_time, THD* current_thd)
+{
+#  if (MYSQL_VERSION_ID >= 90700 && !defined(MRN_MARIADB_P))
+  Time_val time;
+  bool result = time_field->val_time(&time);
+  *my_time = MYSQL_TIME(time);
+  return result;
+#  else
+  return time_field->get_time(my_time);
+#  endif
+}
+
 #  define MRN_FIELD_GET_DATE_NO_FUZZY(field, time, thd)                        \
     ((field)->get_date((time), 0))
 #endif
@@ -982,7 +998,7 @@ using mrn_field_date = Field_date;
 #  define MRN_SCHEMA_NAME_DECLARATION const char* schema_name
 #  define MRN_SCHEMA_NAME             (schema_name)
 
-#  define MRN_MULTI_EQ_FUNC MULTI_EQ_FUNC
+#  define MRN_MULTI_EQ_FUNC           MULTI_EQ_FUNC
 #else
 using mrn_field_datetime = Field_datetimef;
 using mrn_field_timestamp = Field_timestampf;
@@ -999,5 +1015,5 @@ using mrn_field_date = Field_newdate;
 #  define MRN_SCHEMA_NAME_DECLARATION char* path
 #  define MRN_SCHEMA_NAME             (path)
 
-#  define MRN_MULTI_EQ_FUNC MULT_EQUAL_FUNC
+#  define MRN_MULTI_EQ_FUNC           MULT_EQUAL_FUNC
 #endif
