@@ -39,6 +39,7 @@ need_stop=no
 have_auto_generated_password=no
 if systemctl is-active ${service_name} > /dev/null; then
   try_auto_prepare=yes
+  echo "${service_name} is active!!!!"
 else
   if systemctl start ${service_name} > /dev/null; then
     need_stop=yes
@@ -74,6 +75,7 @@ need_password_expire=no
 if [ "${try_auto_prepare}" = "yes" ]; then
   password_option=""
   if [ "${have_auto_generated_password}" = "yes" ]; then
+    echo "have_auto_generated_password is yes!!!"
     if "${mysql_command}" \
          -u root \
          --connect-expired-password \
