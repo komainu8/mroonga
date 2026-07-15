@@ -80,7 +80,7 @@ if [ "${try_auto_prepare}" = "yes" ]; then
          -u root \
          --connect-expired-password \
          -p"${auto_generated_password}" \
-         -e "quit" > /dev/null 2>&1; then
+         -e "quit"; then
       if "${mysql_command}" \
            -u root \
            --connect-expired-password \
