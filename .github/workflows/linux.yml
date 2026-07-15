@@ -10,6 +10,7 @@ on:
       - ".github/workflows/linux.yml"
       - "configure.ac"
       - "doc/**"
+      - "data/**"
       - "mysql-test/**"
       - "packages/**"
       - "version_*"
