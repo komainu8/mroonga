@@ -75,7 +75,7 @@ REPO
     mysql_package_version=$(echo ${mysql_version} | sed -e 's/\.//g')
     if [ "${mysql_package_version}" = "97" ]; then
       sudo ${DNF} install -y \
-           https://repo.mysql.com/mysql84-community-release-el${major_version}.rpm
+           https://repo.mysql.com/yum/mysql-9.7-community/el/8/x86_64/mysql84-community-release-el${major_version}-3.noarch.rpm
     else
       sudo ${DNF} install -y \
            https://repo.mysql.com/mysql${mysql_package_version}-community-release-el${major_version}.rpm
